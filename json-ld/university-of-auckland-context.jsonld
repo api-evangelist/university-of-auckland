@@ -1,0 +1,51 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "schema": "https://schema.org/",
+    "uoa": "https://www.auckland.ac.nz/ns#",
+    "@vocab": "https://www.auckland.ac.nz/ns#",
+    "name": "schema:name",
+    "url": "schema:url",
+    "description": "schema:description",
+    "Institution": {
+      "@id": "schema:CollegeOrUniversity"
+    },
+    "Article": {
+      "@id": "schema:Dataset",
+      "@context": {
+        "id": "schema:identifier",
+        "title": "schema:name",
+        "doi": "schema:identifier",
+        "handle": "schema:identifier",
+        "url": "schema:url",
+        "url_public_html": "schema:url",
+        "created_date": "schema:dateCreated",
+        "defined_type_name": "schema:additionalType",
+        "resource_doi": "schema:isBasedOn",
+        "resource_title": "schema:isBasedOn",
+        "timeline": "uoa:timeline"
+      }
+    },
+    "Collection": {
+      "@id": "schema:Collection",
+      "@context": {
+        "id": "schema:identifier",
+        "title": "schema:name",
+        "doi": "schema:identifier",
+        "handle": "schema:identifier",
+        "url": "schema:url"
+      }
+    },
+    "Author": {
+      "@id": "schema:Person",
+      "@context": {
+        "full_name": "schema:name",
+        "orcid_id": "schema:identifier",
+        "url_name": "schema:alternateName"
+      }
+    }
+  },
+  "@type": "CollegeOrUniversity",
+  "name": "University of Auckland",
+  "url": "https://www.auckland.ac.nz/"
+}

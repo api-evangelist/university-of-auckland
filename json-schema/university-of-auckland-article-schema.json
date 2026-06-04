@@ -1,0 +1,130 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/university-of-auckland/main/json-schema/university-of-auckland-article-schema.json",
+  "title": "Figshare Article",
+  "description": "Public article/dataset record from the Figshare v2 API as used by the University of Auckland institutional repository (institution=12).",
+  "type": "object",
+  "required": [
+    "created_date",
+    "defined_type",
+    "defined_type_name",
+    "doi",
+    "handle",
+    "id",
+    "resource_doi",
+    "resource_title",
+    "thumb",
+    "timeline",
+    "title",
+    "url",
+    "url_private_api",
+    "url_private_html",
+    "url_public_api",
+    "url_public_html"
+  ],
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Unique identifier for article",
+      "examples": [
+        1434614
+      ]
+    },
+    "title": {
+      "type": "string",
+      "description": "Title of article",
+      "examples": [
+        "Test article title"
+      ]
+    },
+    "doi": {
+      "type": "string",
+      "description": "DOI",
+      "examples": [
+        "10.6084/m9.figshare.1434614"
+      ]
+    },
+    "handle": {
+      "type": "string",
+      "description": "Handle",
+      "examples": [
+        "111184/figshare.1234"
+      ]
+    },
+    "url": {
+      "type": "string",
+      "description": "Api endpoint for article",
+      "examples": [
+        "http://api.figshare.com/articles/1434614"
+      ]
+    },
+    "url_public_html": {
+      "type": "string",
+      "description": "Public site endpoint for article",
+      "examples": [
+        "https://figshare.com/articles/media/Test_article_title/1434614"
+      ]
+    },
+    "url_public_api": {
+      "type": "string",
+      "description": "Public Api endpoint for article",
+      "examples": [
+        "https://api.figshare.com/articles/1434614"
+      ]
+    },
+    "url_private_html": {
+      "type": "string",
+      "description": "Private site endpoint for article",
+      "examples": [
+        "https://figshare.com/account/articles/1434614"
+      ]
+    },
+    "url_private_api": {
+      "type": "string",
+      "description": "Private Api endpoint for article",
+      "examples": [
+        "https://api.figshare.com/account/articles/1434614"
+      ]
+    },
+    "timeline": {
+      "type": "object",
+      "description": "Article timeline (posted, firstOnline, revision, submission, etc.)"
+    },
+    "thumb": {
+      "type": "string",
+      "description": "Thumbnail image",
+      "examples": [
+        "https://ndownloader.figshare.com/files/123456789/preview/12345678/thumb.png"
+      ]
+    },
+    "defined_type": {
+      "type": "integer",
+      "description": "Type of article identifier",
+      "examples": [
+        3
+      ]
+    },
+    "defined_type_name": {
+      "type": "string",
+      "description": "Name of the article type identifier",
+      "examples": [
+        "media"
+      ]
+    },
+    "resource_doi": {
+      "type": "string",
+      "description": "Deprecated by related materials. Not applicable to regular users. In a publisher case, this is the publisher article DOI."
+    },
+    "resource_title": {
+      "type": "string",
+      "description": "Deprecated by related materials. Not applicable to regular users. In a publisher case, this is the publisher article title."
+    },
+    "created_date": {
+      "type": "string",
+      "description": "Date when article was created",
+      "examples": [
+        "2017-05-18T11:49:03Z"
+      ]
+    }
+  }
+}

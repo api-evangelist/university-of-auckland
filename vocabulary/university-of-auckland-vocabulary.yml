@@ -1,0 +1,59 @@
+---
+vocabulary:
+  name: University of Auckland Research Repository Vocabulary
+  description: >-
+    Controlled vocabulary of the core terms used across the University of
+    Auckland machine-readable API footprint, derived from the Figshare v2
+    OpenAPI description (institutional repository, institution id 12) and the
+    OAI-PMH metadata harvesting service.
+  version: "1.0.0"
+  terms:
+    - term: Article
+      definition: >-
+        A single deposited research output in Figshare (dataset, figure, media,
+        paper, etc.) identified by a numeric id and a DOI.
+      tags: [ figshare, object, research-data ]
+    - term: Collection
+      definition: >-
+        A curated grouping of Figshare articles that can carry its own DOI and
+        handle.
+      tags: [ figshare, object, research-data ]
+    - term: Project
+      definition: >-
+        A workspace grouping articles and collaborators for in-progress
+        research before publication.
+      tags: [ figshare, object ]
+    - term: DOI
+      definition: >-
+        Digital Object Identifier minted for published articles and collections
+        (e.g. 10.6084/m9.figshare.NNNNNN).
+      tags: [ identifier, citation ]
+    - term: Handle
+      definition: Persistent Handle System identifier assigned to a record.
+      tags: [ identifier ]
+    - term: Institution
+      definition: >-
+        Figshare institution scope; the University of Auckland repository is
+        institution id 12 and is filterable via the institution parameter.
+      tags: [ figshare, scope ]
+    - term: Timeline
+      definition: >-
+        Set of lifecycle dates for a record (posted, firstOnline, revision,
+        submission, publisherPublication).
+      tags: [ figshare, metadata ]
+    - term: DefinedType
+      definition: >-
+        The item type of an article (figure, media, dataset, paper, poster,
+        etc.), exposed as defined_type and defined_type_name.
+      tags: [ figshare, classification ]
+    - term: OAI-PMH
+      definition: >-
+        Open Archives Initiative Protocol for Metadata Harvesting endpoint that
+        exposes repository records in Dublin Core, DataCite, RDF, CERIF, METS
+        and UKETD_DC schemas.
+      tags: [ metadata, harvesting, interoperability ]
+    - term: ResourceDOI
+      definition: >-
+        DOI of the external resource (e.g. a published paper) that a deposited
+        article is linked to, exposed as resource_doi.
+      tags: [ figshare, citation, linkage ]

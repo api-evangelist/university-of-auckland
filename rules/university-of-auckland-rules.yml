@@ -1,0 +1,65 @@
+---
+# Spectral ruleset for the University of Auckland Figshare research repository API.
+# Encodes patterns observed in the real Figshare v2 OpenAPI 3.0.3 description.
+formats:
+  - oas3
+extends: []
+rules:
+  uoa-info-title-present:
+    description: API description must declare an info.title.
+    severity: error
+    given: $.info
+    then:
+      field: title
+      function: truthy
+
+  uoa-info-version-present:
+    description: API description must declare an info.version.
+    severity: error
+    given: $.info
+    then:
+      field: version
+      function: truthy
+
+  uoa-server-figshare-v2:
+    description: At least one server should target the Figshare v2 base URL.
+    severity: warn
+    given: $.servers[*].url
+    then:
+      function: pattern
+      functionOptions:
+        match: "api\\.figshare\\.com/v2"
+
+  uoa-operation-id-present:
+    description: Every operation should carry an operationId (Figshare uses snake_case operationIds).
+    severity: warn
+    given: $.paths[*][get,post,put,delete,patch]
+    then:
+      field: operationId
+      function: truthy
+
+  uoa-operation-tags:
+    description: Operations should be tagged (articles, collections, projects, etc.).
+    severity: warn
+    given: $.paths[*][get,post,put,delete,patch]
+    then:
+      field: tags
+      function: truthy
+
+  uoa-snake-case-operation-id:
+    description: operationId values follow Figshare snake_case convention.
+    severity: info
+    given: $.paths[*][get,post,put,delete,patch].operationId
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[a-z0-9_]+$"
+
+  uoa-pagination-params:
+    description: Listing operations should expose page / page_size pagination parameters.
+    severity: info
+    given: $.paths[/articles].get.parameters[*].name
+    then:
+      function: pattern
+      functionOptions:
+        match: "page|page_size|limit|offset|X-Cursor"

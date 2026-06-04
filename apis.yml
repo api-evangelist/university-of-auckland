@@ -43,6 +43,12 @@ apis:
         url: https://docs.figshare.com/
       - type: Website
         url: https://auckland.figshare.com/
+      - type: OpenAPI
+        url: openapi/university-of-auckland-figshare-rest.yaml
+      - type: JSONSchema
+        url: json-schema/university-of-auckland-article-schema.json
+      - type: x-example
+        url: examples/university-of-auckland-articles-list-example.json
   - aid: university-of-auckland:figshare-oai
     name: University of Auckland Figshare OAI-PMH Service
     description: >-
@@ -87,6 +93,12 @@ common:
     url: finops/university-of-auckland-finops.yml
   - type: Review
     url: review.yml
+  - type: Vocabulary
+    url: vocabulary/university-of-auckland-vocabulary.yml
+  - type: Rules
+    url: rules/university-of-auckland-rules.yml
+  - type: JSONLD
+    url: json-ld/university-of-auckland-context.jsonld
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
