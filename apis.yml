@@ -1,0 +1,92 @@
+---
+aid: university-of-auckland
+name: University of Auckland
+description: >-
+  The University of Auckland is New Zealand's largest and highest-ranked
+  university, placed #92 in the QS World University Rankings 2025. Its public
+  developer and API footprint is modest and decentralized rather than a single
+  unified developer portal. The most clearly documented machine-readable
+  interfaces are its institutional Figshare research data repository (REST API
+  and OAI-PMH, institution id 12) and a public University Directory staff-search
+  API. The University also maintains a domain-verified GitHub organization where
+  it publishes open-source projects spanning data engineering, identity
+  integration, and research tooling.
+type: Index
+position: Consumer
+access: 3rd-Party
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+url: https://raw.githubusercontent.com/api-evangelist/university-of-auckland/refs/heads/main/apis.yml
+tags:
+  - Education
+  - Higher Education
+  - University
+  - Research Data
+  - Open Data
+  - New Zealand
+created: '2026-06-03'
+modified: '2026-06-03'
+specificationVersion: '0.19'
+apis:
+  - aid: university-of-auckland:figshare-rest
+    name: University of Auckland Figshare Research Repository API
+    description: >-
+      Figshare-hosted institutional research data repository for the University
+      of Auckland. The Figshare v2 REST API exposes public articles, datasets,
+      collections, and projects; University of Auckland records are filtered via
+      the institution=12 parameter (confirmed by k6.auckland DOIs). Figshare
+      recommends no more than one request per second.
+    humanURL: https://auckland.figshare.com/
+    baseURL: https://api.figshare.com/v2
+    tags: [ Research Data, Open Data, Repository, Datasets, REST ]
+    properties:
+      - type: Documentation
+        url: https://docs.figshare.com/
+      - type: Website
+        url: https://auckland.figshare.com/
+  - aid: university-of-auckland:figshare-oai
+    name: University of Auckland Figshare OAI-PMH Service
+    description: >-
+      OAI-PMH metadata harvesting endpoint for the University of Auckland
+      Figshare research repository. Supports standard OAI-PMH verbs and multiple
+      metadata schemas (Dublin Core, DataCite, RDF, CERIF XML, METS, UKETD_DC),
+      with University of Auckland records exposed via the Figshare portal set.
+    humanURL: https://docs.figshare.com/old_docs/OAI-PMH/
+    baseURL: https://api.figshare.com/v2/oai
+    tags: [ Research Data, OAI-PMH, Metadata, Harvesting, Repository ]
+    properties:
+      - type: Documentation
+        url: https://docs.figshare.com/old_docs/OAI-PMH/
+      - type: Website
+        url: https://auckland.figshare.com/
+  - aid: university-of-auckland:unidirectory
+    name: University Directory API
+    description: >-
+      A set of public University Directory APIs that allow anyone to search for
+      University of Auckland staff and retrieve a summary profile or a full
+      profile of a staff member. Documented as available externally without a
+      password (anonymous access). NOTE: the unidirectory.auckland.ac.nz host
+      did not resolve from the verification environment, so this entry is based
+      on published documentation references rather than a live probe.
+    humanURL: https://unidirectory.auckland.ac.nz/apidocs
+    tags: [ Directory, Staff, Search, People ]
+    properties:
+      - type: Documentation
+        url: https://unidirectory.auckland.ac.nz/apidocs
+common:
+  - type: Website
+    url: https://www.auckland.ac.nz/
+  - type: GitHub
+    url: https://github.com/university-of-auckland
+  - type: LinkedIn
+    url: https://www.linkedin.com/school/university-of-auckland/
+  - type: Plans
+    url: plans/university-of-auckland-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/university-of-auckland-rate-limits.yml
+  - type: FinOps
+    url: finops/university-of-auckland-finops.yml
+  - type: Review
+    url: review.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

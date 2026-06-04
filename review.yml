@@ -1,0 +1,48 @@
+---
+name: University of Auckland
+description: University of Auckland public developer/API footprint review for APIs.json cataloging.
+url: https://raw.githubusercontent.com/api-evangelist/university-of-auckland/refs/heads/main/review.yml
+created: '2026-06-03'
+modified: '2026-06-03'
+reviews:
+  - date: '2026-06-03'
+    rating: 2
+    summary: >-
+      The University of Auckland has a modest, decentralized API footprint with
+      no single unified developer portal. Live-verified interfaces are the
+      institutional Figshare research repository REST API and OAI-PMH service
+      (institution=12, confirmed via k6.auckland DOIs), both returning HTTP 200.
+      The official GitHub organization is domain-verified and reachable. A
+      public University Directory staff API is documented at
+      unidirectory.auckland.ac.nz/apidocs but the host did not resolve from the
+      verification environment, so it is cataloged from documentation references
+      with a caveat rather than a live probe. No fabricated endpoints; entries
+      reflect only confirmed or clearly documented resources.
+    endpoints:
+      - url: https://www.auckland.ac.nz/
+        status: 200
+        note: Official institution website (live).
+      - url: https://github.com/university-of-auckland
+        status: 200
+        note: Domain-verified official GitHub org with open-source repos.
+      - url: https://auckland.figshare.com/
+        status: 202
+        note: Institutional Figshare research repository landing.
+      - url: https://api.figshare.com/v2/articles?institution=12
+        status: 200
+        note: Figshare REST API returning University of Auckland records (k6.auckland DOIs).
+      - url: https://api.figshare.com/v2/oai?verb=Identify
+        status: 200
+        note: Figshare OAI-PMH metadata harvesting endpoint (live).
+      - url: https://docs.figshare.com/
+        status: 200
+        note: Figshare API and OAI-PMH documentation (live).
+      - url: https://research-hub.auckland.ac.nz/service/institutional-figshare
+        status: 200
+        note: University ResearchHub page describing the institutional Figshare service.
+      - url: https://profiles.auckland.ac.nz/
+        status: 200
+        note: Public staff research profiles site (live).
+      - url: https://unidirectory.auckland.ac.nz/apidocs
+        status: 0
+        note: Documented public University Directory API docs; host did not resolve from verification environment.
