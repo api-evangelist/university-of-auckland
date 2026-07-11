@@ -79,6 +79,10 @@ apis:
       - type: Documentation
         url: https://unidirectory.auckland.ac.nz/apidocs
 common:
+  - type: Authentication
+    url: authentication/university-of-auckland-authentication.yml
+  - type: OAuthScopes
+    url: scopes/university-of-auckland-scopes.yml
   - type: Website
     url: https://www.auckland.ac.nz/
   - type: GitHub
