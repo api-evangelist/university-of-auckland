@@ -282,6 +282,9 @@ apis:
   - type: x-example
     url: examples/university-of-auckland-articles-list-example.json
 common:
+  - type: CapabilityMap
+    url: capabilities/university-of-auckland-capability-edges.yml
+    name: University of Auckland Business Capability Map
   - type: AgenticAccess
     url: agentic-access/university-of-auckland-agentic-access.yml
   - type: DomainSecurity
