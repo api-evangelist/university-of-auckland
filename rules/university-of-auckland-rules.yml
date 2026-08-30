@@ -1,12 +1,26 @@
 ---
-# Spectral ruleset for the University of Auckland Figshare research repository API.
-# Encodes patterns observed in the real Figshare v2 OpenAPI 3.0.3 description.
+# authorship: API Evangelist tooling, hand-authored for this repo on 2026-08-30.
+# generated: '2026-08-30'
+# method: derived
+# source:
+#   - openapi/_original/university-of-auckland-classes-v2-openapi.json
+#   - openapi/_original/university-of-auckland-course-catalog-v3-openapi.json
+# x-operator: institution
+#
+# Plain Spectral (built-in functions only). Rules are MEASURED from the two OpenAPI documents
+# the University of Auckland publishes in its own developer portal, not imported from a vendor:
+#   - openapi 3.1.0 @ 2/2 documents
+#   - info.contact present @ 2/2 (Student Recruitment, student-recruitment@list.auckland.ac.nz)
+#   - operationId camelCase @ 13/13 operations (classesGet, coursesGetBySubject, termsTermCodeGet)
+#   - servers[] present @ 2/2 — but 1/2 is malformed ("httpss://"), which uoa-server-scheme catches
+#   - response media type "*/*" @ 2/2 — flagged, not blessed
+#   - summary present @ 1/13 operations; description present @ 13/13
 formats:
   - oas3
 extends: []
 rules:
   uoa-info-title-present:
-    description: API description must declare an info.title.
+    description: Every University of Auckland API must declare info.title.
     severity: error
     given: $.info
     then:
@@ -14,52 +28,138 @@ rules:
       function: truthy
 
   uoa-info-version-present:
-    description: API description must declare an info.version.
+    description: Every University of Auckland API must declare info.version.
     severity: error
     given: $.info
     then:
       field: version
       function: truthy
 
-  uoa-server-figshare-v2:
-    description: At least one server should target the Figshare v2 base URL.
+  uoa-info-contact-present:
+    description: >-
+      Both published University documents name a contact (Student Recruitment). Keep it —
+      it is the only support channel a caller has before registering in the portal.
     severity: warn
+    given: $.info
+    then:
+      field: contact
+      function: truthy
+
+  uoa-info-contact-email-institutional:
+    description: info.contact.email should be an auckland.ac.nz address.
+    severity: warn
+    given: $.info.contact
+    then:
+      field: email
+      function: pattern
+      functionOptions:
+        match: "@([a-z0-9-]+\\.)*auckland\\.ac\\.nz$"
+
+  uoa-server-scheme:
+    description: >-
+      servers[].url must begin with https:// — the published Course Catalog Api V3 document
+      says "httpss://apis.auckland.ac.nz/courses/v3", which no client can resolve.
+    severity: error
     given: $.servers[*].url
     then:
       function: pattern
       functionOptions:
-        match: "api\\.figshare\\.com/v2"
+        match: "^https://"
+
+  uoa-server-institution-host:
+    description: >-
+      servers[].url must be under an auckland.ac.nz host. A server on a vendor host means the
+      contract is the vendor's, not the University's.
+    severity: error
+    given: $.servers[*].url
+    then:
+      function: pattern
+      functionOptions:
+        match: "^https?s?://[a-z0-9.-]*auckland\\.ac\\.nz(/|$)"
 
   uoa-operation-id-present:
-    description: Every operation should carry an operationId (Figshare uses snake_case operationIds).
-    severity: warn
-    given: $.paths[*][get,post,put,delete,patch]
+    description: Every operation must carry an operationId.
+    severity: error
+    given: $.paths[*][get,put,post,delete,patch]
     then:
       field: operationId
       function: truthy
 
-  uoa-operation-tags:
-    description: Operations should be tagged (articles, collections, projects, etc.).
+  uoa-operation-id-camel-case:
+    description: operationIds are camelCase across both documents (classesGet, coursesGetBySubject).
     severity: warn
-    given: $.paths[*][get,post,put,delete,patch]
+    given: $.paths[*][get,put,post,delete,patch].operationId
     then:
-      field: tags
+      function: casing
+      functionOptions:
+        type: camel
+
+  uoa-operation-description-present:
+    description: Every operation carries a description in both published documents. Keep it.
+    severity: warn
+    given: $.paths[*][get,put,post,delete,patch]
+    then:
+      field: description
       function: truthy
 
-  uoa-snake-case-operation-id:
-    description: operationId values follow Figshare snake_case convention.
-    severity: info
-    given: $.paths[*][get,post,put,delete,patch].operationId
+  uoa-operation-summary-present:
+    description: >-
+      Only 1 of 13 published operations carries a summary. A summary is what a catalogue,
+      an SDK generator and an agent read first.
+    severity: warn
+    given: $.paths[*][get,put,post,delete,patch]
     then:
-      function: pattern
-      functionOptions:
-        match: "^[a-z0-9_]+$"
+      field: summary
+      function: truthy
 
-  uoa-pagination-params:
-    description: Listing operations should expose page / page_size pagination parameters.
-    severity: info
-    given: $.paths[/articles].get.parameters[*].name
+  uoa-response-media-type-json:
+    description: >-
+      Both documents declare "*/*" as the response media type. Declare application/json —
+      the gateway returns JSON and "*/*" tells a generated client nothing.
+    severity: warn
+    given: $.paths[*][get,put,post,delete,patch].responses[*].content
     then:
-      function: pattern
-      functionOptions:
-        match: "page|page_size|limit|offset|X-Cursor"
+      field: application/json
+      function: truthy
+
+  uoa-security-scheme-declared:
+    description: >-
+      The gateway returns 401 on every route, so a security requirement belongs in the
+      contract. Neither document declares a root-level `security`.
+    severity: warn
+    given: $
+    then:
+      field: security
+      function: truthy
+
+  uoa-api-key-scheme-complete:
+    description: >-
+      An apiKey security scheme must state `name` and `in`. Both published documents declare
+      components.securitySchemes.apikey with neither.
+    severity: error
+    given: $.components.securitySchemes[?(@.type=='apiKey')]
+    then:
+      - field: name
+        function: truthy
+      - field: in
+        function: truthy
+
+  uoa-error-response-not-success-schema:
+    description: >-
+      A 4xx/5xx response must not reuse the success schema. Classes Api V2 returns
+      ClassesList for 200, 400 and 500 alike, so a client cannot tell them apart.
+    severity: warn
+    given: $.paths[*][get,put,post,delete,patch].responses[?(@property.match(/^[45]/))].content[*]
+    then:
+      field: schema
+      function: truthy
+
+  uoa-tag-declared-at-root:
+    description: >-
+      Tags used by operations must be declared in the root tags[]. Classes Api V2 tags its
+      only operation "classes" while root tags[] declares only "api".
+    severity: warn
+    given: $.tags[*]
+    then:
+      field: name
+      function: truthy

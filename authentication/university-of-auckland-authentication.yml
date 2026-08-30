@@ -1,18 +1,62 @@
-generated: '2026-07-11'
+---
+generated: '2026-08-30'
 method: derived
-source: openapi/university-of-auckland-figshare-rest.yaml
+source:
+  - openapi/_original/university-of-auckland-classes-v2-openapi.json
+  - openapi/_original/university-of-auckland-course-catalog-v3-openapi.json
+  - https://developer.auckland.ac.nz/prd/guides
+  - probed 2026-08-30 against https://apis.auckland.ac.nz/
+x-operator: institution
+provider: University of Auckland
+providerId: university-of-auckland
+description: >-
+  Authentication for the University of Auckland's own API gateway (apis.auckland.ac.nz, Kong)
+  and its developer portal (developer.auckland.ac.nz/prd). Derived from the two OpenAPI
+  documents the University publishes in that portal plus the portal's own guides; the scheme
+  names and flow are the University's, the consolidation is ours.
 summary:
   types:
-  - oauth2
+    - apiKey
+    - oauth2
   oauth2_flows:
-  - authorizationCode
+    - clientCredentials
+  registration: self-registration at https://developer.auckland.ac.nz/prd (portal login is OIDC)
 schemes:
-- name: OAuth2
-  type: oauth2
-  flows:
-  - flow: authorizationCode
-    authorizationUrl: https://figshare.com/account/applications/authorize
-    tokenUrl: https://api.figshare.com/v2/token
-    scopes: 1
-  sources:
-  - openapi/university-of-auckland-figshare-rest.yaml
+  - name: apikey
+    type: apiKey
+    declared_in:
+      - openapi/_original/university-of-auckland-classes-v2-openapi.json
+      - openapi/_original/university-of-auckland-course-catalog-v3-openapi.json
+    note: >-
+      Both published specifications declare components.securitySchemes.apikey with type apiKey
+      but do NOT declare `name` or `in`, and neither document carries a root-level or
+      operation-level `security` requirement. The scheme is therefore under-specified in the
+      University's own contract; the location of the key is not machine-readable from it.
+  - name: OAuth2 client credentials
+    type: oauth2
+    flow: clientCredentials
+    source: https://developer.auckland.ac.nz/prd/guides
+    note: >-
+      The portal publishes three guides — "Trying API from developer portal", "Creating
+      application client" and "Calling API using Client Credential flow" — establishing an
+      application-client registration path and a client-credentials token exchange. The token
+      endpoint is not published on the unauthenticated portal surface, so it is NOT recorded here.
+probes:
+  - url: https://apis.auckland.ac.nz/
+    status: 404
+    body: '{"message":"no Route matched with those values"}'
+    note: Kong gateway root; confirms the gateway, not a dead host.
+  - url: https://apis.auckland.ac.nz/courses/v3/terms
+    status: 401
+    body: '{"message":"Unauthorized"}'
+  - url: https://apis.auckland.ac.nz/classes/v2/classes
+    status: 401
+    body: '{"message":"Unauthorized"}'
+  - url: https://developer.auckland.ac.nz/prd/
+    status: 200
+    note: Kong Developer Portal, workspace "prd", portal auth type openid-connect.
+gaps:
+  - No published token endpoint or authorization server metadata.
+  - No published scope list; scopes are NOT recorded because none are declared.
+  - securitySchemes.apikey omits `name` and `in`.
+  - No operation- or root-level `security` requirement in either specification.

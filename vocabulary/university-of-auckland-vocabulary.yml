@@ -1,59 +1,109 @@
 ---
+generated: '2026-08-30'
+method: derived
+source:
+  - openapi/_original/university-of-auckland-classes-v2-openapi.json
+  - openapi/_original/university-of-auckland-course-catalog-v3-openapi.json
+  - https://researchspace.auckland.ac.nz/server/oai/request?verb=ListMetadataFormats
+  - https://iam.auckland.ac.nz/shibboleth
+x-operator: institution
 vocabulary:
-  name: University of Auckland Research Repository Vocabulary
+  name: University of Auckland Institutional API Vocabulary
   description: >-
-    Controlled vocabulary of the core terms used across the University of
-    Auckland machine-readable API footprint, derived from the Figshare v2
-    OpenAPI description (institutional repository, institution id 12) and the
-    OAI-PMH metadata harvesting service.
-  version: "1.0.0"
+    Controlled vocabulary of the terms the University of Auckland uses across the surfaces IT
+    ACTUALLY OPERATES — the Course Catalog Api V3 and Classes Api V2 on its own Kong gateway
+    (apis.auckland.ac.nz), the ResearchSpace OAI-PMH service, and the institutional Shibboleth
+    identity provider. Terms are lifted from the University's own PeopleSoft Campus Solutions
+    (CS9) field names as exposed in its published specifications. Vendor-platform terms
+    (Figshare, Ex Libris) are deliberately NOT included: those belong to the vendor's own
+    vocabulary, not the institution's.
+  version: '1.0.0'
   terms:
-    - term: Article
+    - term: Term
       definition: >-
-        A single deposited research output in Figshare (dataset, figure, media,
-        paper, etc.) identified by a numeric id and a DOI.
-      tags: [ figshare, object, research-data ]
-    - term: Collection
+        An academic period identified by a four-digit PeopleSoft term code (e.g. "1173"), with
+        a description, start and end dates, an academic career and an enrolment open date.
+      source: Course Catalog Api V3 — components.schemas.Term
+      tags: [ course-catalog, calendar, cs9 ]
+    - term: acadCareer
       definition: >-
-        A curated grouping of Figshare articles that can carry its own DOI and
-        handle.
-      tags: [ figshare, object, research-data ]
-    - term: Project
+        Academic career code scoping a term, course or class — e.g. UC01 (undergraduate),
+        UC02. The default value published in the specification is UC01.
+      source: Course Catalog Api V3, Classes Api V2
+      tags: [ cs9, reference-data ]
+    - term: acadGroup
       definition: >-
-        A workspace grouping articles and collaborators for in-progress
-        research before publication.
-      tags: [ figshare, object ]
-    - term: DOI
+        Academic group code, in practice the faculty — e.g. 3170 for the Faculty of Education
+        and Social Work.
+      source: Classes Api V2 — query parameter acadGroup
+      tags: [ cs9, org ]
+    - term: acadOrg
+      definition: Academic organisation code, in practice the department — e.g. MATHS.
+      source: Classes Api V2, Course Catalog Api V3 (/acadOrgs)
+      tags: [ cs9, org ]
+    - term: Subject
       definition: >-
-        Digital Object Identifier minted for published articles and collections
-        (e.g. 10.6084/m9.figshare.NNNNNN).
-      tags: [ identifier, citation ]
-    - term: Handle
-      definition: Persistent Handle System identifier assigned to a record.
-      tags: [ identifier ]
-    - term: Institution
+        Subject area code under which courses are catalogued — e.g. EDUC, COMLAW. Subjects can
+        be filtered by effective year, effective status, course career, and whether they carry
+        only active courses, main-programme courses, or microcredentials.
+      source: Course Catalog Api V3 — /subjects, /subject/{subject}/courses
+      tags: [ course-catalog, cs9 ]
+    - term: Course
       definition: >-
-        Figshare institution scope; the University of Auckland repository is
-        institution id 12 and is filterable via the institution parameter.
-      tags: [ figshare, scope ]
-    - term: Timeline
+        A catalogued course identified by crseId plus crseOfferNbr, carrying subject,
+        catalogNbr, title, description, level, feeBand, grading basis, requirement group,
+        units, effective dates and a microcredential flag.
+      source: Course Catalog Api V3 — components.schemas.Course
+      tags: [ course-catalog, cs9 ]
+    - term: catalogNbr
+      definition: Catalogue number distinguishing a course within a subject — e.g. 793A.
+      source: Classes Api V2, Course Catalog Api V3
+      tags: [ course-catalog, cs9 ]
+    - term: Class
       definition: >-
-        Set of lifecycle dates for a record (posted, firstOnline, revision,
-        submission, publisherPublication).
-      tags: [ figshare, metadata ]
-    - term: DefinedType
+        A scheduled offering of a course in a term, identified by classNbr, carrying section,
+        component, campus, status, class type, consent codes, requirements, notes and meeting
+        patterns.
+      source: Classes Api V2 — components.schemas.ClassModel
+      tags: [ timetable, cs9 ]
+    - term: MeetingPattern
+      definition: The days, times, location and dates on which a class meets.
+      source: Classes Api V2 — components.schemas.MeetingPattern
+      tags: [ timetable ]
+    - term: component
       definition: >-
-        The item type of an article (figure, media, dataset, paper, poster,
-        etc.), exposed as defined_type and defined_type_name.
-      tags: [ figshare, classification ]
-    - term: OAI-PMH
+        The instructional component of a class — e.g. LAB, TUT. Filterable as a
+        comma-separated list.
+      source: Classes Api V2; Course Catalog Api V3 (/componentCodes)
+      tags: [ timetable, reference-data ]
+    - term: consent
       definition: >-
-        Open Archives Initiative Protocol for Metadata Harvesting endpoint that
-        exposes repository records in Dublin Core, DataCite, RDF, CERIF, METS
-        and UKETD_DC schemas.
-      tags: [ metadata, harvesting, interoperability ]
-    - term: ResourceDOI
+        Consent code governing whether departmental or instructor permission is required to
+        enrol in (or drop) a class.
+      source: Classes Api V2; Course Catalog Api V3 (/consentCodes)
+      tags: [ enrolment, reference-data ]
+    - term: microcredential
       definition: >-
-        DOI of the external resource (e.g. a published paper) that a deposited
-        article is linked to, exposed as resource_doi.
-      tags: [ figshare, citation, linkage ]
+        Flag on a course marking it as a microcredential rather than a component of a degree
+        programme.
+      source: Course Catalog Api V3 — components.schemas.Course
+      tags: [ course-catalog, credential ]
+    - term: ResearchSpace
+      definition: >-
+        The University's institutional research repository, self-hosted on
+        researchspace.auckland.ac.nz. Records carry handles under the 2292 prefix
+        (oai:researchspace.auckland.ac.nz:2292/NNNN) and are exposed over OAI-PMH 2.0.
+      source: https://researchspace.auckland.ac.nz/server/oai/request?verb=Identify
+      tags: [ repository, oai-pmh ]
+    - term: OAI set
+      definition: >-
+        A harvestable grouping of ResearchSpace records corresponding to an institutional
+        collection — e.g. "A1 - Research Outputs Online", "A4 - Dataset Archive".
+      source: https://researchspace.auckland.ac.nz/server/oai/request?verb=ListSets
+      tags: [ repository, oai-pmh ]
+    - term: shibmd:Scope
+      definition: >-
+        The security scope the University's Shibboleth identity provider asserts —
+        auckland.ac.nz — qualifying every scoped attribute it releases into federation.
+      source: https://iam.auckland.ac.nz/shibboleth
+      tags: [ identity, saml, shibboleth ]
