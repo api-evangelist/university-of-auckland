@@ -1,304 +1,433 @@
 ---
 aid: university-of-auckland
 name: University of Auckland
+x-type: university
+x-category: Public Research University
 description: >-
-  The University of Auckland is New Zealand's largest and highest-ranked
-  university, placed #92 in the QS World University Rankings 2025. Its public
-  developer and API footprint is modest and decentralized rather than a single
-  unified developer portal. The most clearly documented machine-readable
-  interfaces are its institutional Figshare research data repository (REST API
-  and OAI-PMH, institution id 12) and a public University Directory staff-search
-  API. The University also maintains a domain-verified GitHub organization where
-  it publishes open-source projects spanning data engineering, identity
-  integration, and research tooling.
+  Waipapa Taumata Rau | The University of Auckland is New Zealand's largest and highest-ranked
+  university. Unlike most of this cohort it genuinely operates an API programme of its own: a Kong
+  gateway at apis.auckland.ac.nz fronted by a public developer portal at developer.auckland.ac.nz,
+  which publishes two OpenAPI 3.1.0 contracts — Course Catalog Api V3 and Classes Api V2 — over its
+  PeopleSoft Campus Solutions (CS9) student records, plus guides for registering an application
+  client and calling with the client-credentials flow. Both routes are live and return HTTP 401
+  without a key, so the contracts are public while the data is registered-developer only. The
+  University also self-hosts ResearchSpace (DSpace) on its own domain with a live OAI-PMH 2.0
+  service advertising thirteen metadata formats, and runs its own Shibboleth identity provider at
+  iam.auckland.ac.nz publishing SAML 2.0 metadata scoped to auckland.ac.nz. Its research data
+  repository (auckland.figshare.com) and library discovery layer (Ex Libris Primo) are vendor
+  tenancies: the data and the DOIs are the University's, the contracts are not, and no vendor
+  specification is saved under this slug. The previously catalogued unidirectory.auckland.ac.nz
+  staff directory API no longer resolves in DNS and has been removed. There is no open data portal
+  and no llms.txt, security.txt, status page, changelog or deprecation policy on any institution host.
 type: Index
 deliveryModel:
   model: saas
   open_source: false
-  commercial: true
+  commercial: false
   callable_host: true
   label: Hosted service · you call their endpoint
   confidence: high
   source:
-  - openapi
-  - pricing
-  generated: '2026-08-28'
+    - openapi
+    - probed
+  generated: '2026-08-30'
   method: derived
 accessModel:
   pricing: free
   onboarding: self-serve
   trial: false
-  try_now: true
+  try_now: false
   public: false
-  label: Free · Self-serve signup
+  label: Free · Register an application client in the developer portal
   confidence: high
   source:
-  - plans
-  - authentication
-  generated: '2026-07-22'
+    - authentication
+    - probed
+  generated: '2026-08-30'
   method: derived
-position: Consumer
+position: Provider
 access: 3rd-Party
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/university-of-auckland.png
 url: https://raw.githubusercontent.com/api-evangelist/university-of-auckland/refs/heads/main/apis.yml
 tags:
-  - Education
-  - Higher Education
   - University
-  - Research Data
-  - Open Data
+  - Higher Education
+  - Education
   - New Zealand
-created: '2026-06-03'
-modified: '2026-06-03'
-specificationVersion: '0.23'
-apis:
-- aid: university-of-auckland:figshare-oai
-  name: University of Auckland Figshare OAI-PMH Service
-  description: >-
-    OAI-PMH metadata harvesting endpoint for the University of Auckland Figshare research repository.
-    Supports standard OAI-PMH verbs and multiple metadata schemas (Dublin Core, DataCite, RDF, CERIF XML,
-    METS, UKETD_DC), with University of Auckland records exposed via the Figshare portal set.
-  humanURL: https://docs.figshare.com/old_docs/OAI-PMH/
-  baseURL: https://api.figshare.com/v2/oai
-  tags:
+  - Public Research University
+  - Universitas 21
+  - Course Catalog
+  - Student Records
   - Research Data
+  - Research Repository
+  - Identity Federation
   - OAI-PMH
-  - Metadata
-  - Harvesting
-  - Repository
-  properties:
-  - type: Documentation
-    url: https://docs.figshare.com/old_docs/OAI-PMH/
-  - type: Website
-    url: https://auckland.figshare.com/
-- aid: university-of-auckland:unidirectory
-  name: University Directory API
-  description: >-
-    A set of public University Directory APIs that allow anyone to search for University of Auckland staff
-    and retrieve a summary profile or a full profile of a staff member. Documented as available externally
-    without a password (anonymous access). NOTE: the unidirectory.auckland.ac.nz host did not resolve
-    from the verification environment, so this entry is based on published documentation references rather
-    than a live probe.
-  humanURL: https://unidirectory.auckland.ac.nz/apidocs
-  tags:
-  - Directory
-  - Staff
-  - Search
-  - People
-  properties:
-  - type: Documentation
-    url: https://unidirectory.auckland.ac.nz/apidocs
-- aid: university-of-auckland:university-of-auckland-altmetric-api
-  name: University of Auckland altmetric API
-  description: The altmetric API from University of Auckland — 1 operation(s) for altmetric.
-  humanURL: https://auckland.figshare.com/
-  baseURL: https://api.figshare.com/v2
-  tags:
-  - altmetric
-  properties:
-  - type: OpenAPI
-    url: openapi/university-of-auckland-altmetric-api-openapi.yml
-  - type: Documentation
-    url: https://docs.figshare.com/
-  - type: Website
-    url: https://auckland.figshare.com/
-  - type: JSONSchema
-    url: json-schema/university-of-auckland-article-schema.json
-  - type: x-example
-    url: examples/university-of-auckland-articles-list-example.json
-- aid: university-of-auckland:university-of-auckland-articles-api
-  name: University of Auckland articles API
-  description: The articles API from University of Auckland — 34 operation(s) for articles.
-  humanURL: https://auckland.figshare.com/
-  baseURL: https://api.figshare.com/v2
-  tags:
-  - Articles
-  tags_raw:
-  - articles
-  properties:
-  - type: OpenAPI
-    url: openapi/university-of-auckland-articles-api-openapi.yml
-  - type: Documentation
-    url: https://docs.figshare.com/
-  - type: Website
-    url: https://auckland.figshare.com/
-  - type: JSONSchema
-    url: json-schema/university-of-auckland-article-schema.json
-  - type: x-example
-    url: examples/university-of-auckland-articles-list-example.json
-- aid: university-of-auckland:university-of-auckland-authors-api
-  name: University of Auckland authors API
-  description: The authors API from University of Auckland — 2 operation(s) for authors.
-  humanURL: https://auckland.figshare.com/
-  baseURL: https://api.figshare.com/v2
-  tags:
-  - Authors
-  tags_raw:
-  - authors
-  properties:
-  - type: OpenAPI
-    url: openapi/university-of-auckland-authors-api-openapi.yml
-  - type: Documentation
-    url: https://docs.figshare.com/
-  - type: Website
-    url: https://auckland.figshare.com/
-  - type: JSONSchema
-    url: json-schema/university-of-auckland-article-schema.json
-  - type: x-example
-    url: examples/university-of-auckland-articles-list-example.json
-- aid: university-of-auckland:university-of-auckland-collections-api
-  name: University of Auckland collections API
-  description: The collections API from University of Auckland — 21 operation(s) for collections.
-  humanURL: https://auckland.figshare.com/
-  baseURL: https://api.figshare.com/v2
-  tags:
-  - Collection
-  tags_raw:
-  - collections
-  properties:
-  - type: OpenAPI
-    url: openapi/university-of-auckland-collections-api-openapi.yml
-  - type: Documentation
-    url: https://docs.figshare.com/
-  - type: Website
-    url: https://auckland.figshare.com/
-  - type: JSONSchema
-    url: json-schema/university-of-auckland-article-schema.json
-  - type: x-example
-    url: examples/university-of-auckland-articles-list-example.json
-- aid: university-of-auckland:university-of-auckland-institutions-api
-  name: University of Auckland institutions API
-  description: The institutions API from University of Auckland — 20 operation(s) for institutions.
-  humanURL: https://auckland.figshare.com/
-  baseURL: https://api.figshare.com/v2
-  tags:
-  - institutions
-  properties:
-  - type: OpenAPI
-    url: openapi/university-of-auckland-institutions-api-openapi.yml
-  - type: Documentation
-    url: https://docs.figshare.com/
-  - type: Website
-    url: https://auckland.figshare.com/
-  - type: JSONSchema
-    url: json-schema/university-of-auckland-article-schema.json
-  - type: x-example
-    url: examples/university-of-auckland-articles-list-example.json
-- aid: university-of-auckland:university-of-auckland-oauth-api
-  name: University of Auckland oauth API
-  description: The oauth API from University of Auckland — 1 operation(s) for oauth.
-  humanURL: https://auckland.figshare.com/
-  baseURL: https://api.figshare.com/v2
-  tags:
-  - Authentication
-  tags_raw:
-  - oauth
-  properties:
-  - type: OpenAPI
-    url: openapi/university-of-auckland-oauth-api-openapi.yml
-  - type: Documentation
-    url: https://docs.figshare.com/
-  - type: Website
-    url: https://auckland.figshare.com/
-  - type: JSONSchema
-    url: json-schema/university-of-auckland-article-schema.json
-  - type: x-example
-    url: examples/university-of-auckland-articles-list-example.json
-- aid: university-of-auckland:university-of-auckland-other-api
-  name: University of Auckland other API
-  description: The other API from University of Auckland — 7 operation(s) for other.
-  humanURL: https://auckland.figshare.com/
-  baseURL: https://api.figshare.com/v2
-  tags: []
-  tags_raw:
-  - other
-  properties:
-  - type: OpenAPI
-    url: openapi/university-of-auckland-other-api-openapi.yml
-  - type: Documentation
-    url: https://docs.figshare.com/
-  - type: Website
-    url: https://auckland.figshare.com/
-  - type: JSONSchema
-    url: json-schema/university-of-auckland-article-schema.json
-  - type: x-example
-    url: examples/university-of-auckland-articles-list-example.json
-- aid: university-of-auckland:university-of-auckland-profiles-api
-  name: University of Auckland profiles API
-  description: The profiles API from University of Auckland — 2 operation(s) for profiles.
-  humanURL: https://auckland.figshare.com/
-  baseURL: https://api.figshare.com/v2
-  tags:
-  - Profiles
-  tags_raw:
-  - profiles
-  properties:
-  - type: OpenAPI
-    url: openapi/university-of-auckland-profiles-api-openapi.yml
-  - type: Documentation
-    url: https://docs.figshare.com/
-  - type: Website
-    url: https://auckland.figshare.com/
-  - type: JSONSchema
-    url: json-schema/university-of-auckland-article-schema.json
-  - type: x-example
-    url: examples/university-of-auckland-articles-list-example.json
-- aid: university-of-auckland:university-of-auckland-projects-api
-  name: University of Auckland projects API
-  description: The projects API from University of Auckland — 17 operation(s) for projects.
-  humanURL: https://auckland.figshare.com/
-  baseURL: https://api.figshare.com/v2
-  tags:
-  - Project
-  tags_raw:
-  - projects
-  properties:
-  - type: OpenAPI
-    url: openapi/university-of-auckland-projects-api-openapi.yml
-  - type: Documentation
-    url: https://docs.figshare.com/
-  - type: Website
-    url: https://auckland.figshare.com/
-  - type: JSONSchema
-    url: json-schema/university-of-auckland-article-schema.json
-  - type: x-example
-    url: examples/university-of-auckland-articles-list-example.json
-- aid: university-of-auckland:university-of-auckland-symplectic-api
-  name: University of Auckland symplectic API
-  description: The symplectic API from University of Auckland — 5 operation(s) for symplectic.
-  humanURL: https://auckland.figshare.com/
-  baseURL: https://api.figshare.com/v2
-  tags:
-  - symplectic
-  properties:
-  - type: OpenAPI
-    url: openapi/university-of-auckland-symplectic-api-openapi.yml
-  - type: Documentation
-    url: https://docs.figshare.com/
-  - type: Website
-    url: https://auckland.figshare.com/
-  - type: JSONSchema
-    url: json-schema/university-of-auckland-article-schema.json
-  - type: x-example
-    url: examples/university-of-auckland-articles-list-example.json
+created: '2026-06-03'
+modified: '2026-08-30'
+specificationVersion: '0.23'
+x-coverage:
+  state: covered
+  reason: covered
+  generated: '2026-08-30'
+  method: probed
+  detail: >-
+    Re-profiled on 2026-08-30 under the university pipeline's operator axis. The June 2026 profile
+    attributed twenty-two Figshare surfaces to this institution — one generic api.figshare.com/v2
+    contract split into ten per-tag OpenAPIs and eleven apis[] entries, plus every schema, example,
+    collection, ruleset, vocabulary, JSON-LD context, scope, authentication and agentic-access
+    artifact derived from it. All of it was Figshare's engineering under Auckland's name and has
+    been removed. What replaced it was found by live probe, not by link presence: an institution-run
+    Kong developer portal (developer.auckland.ac.nz/prd, 200) and gateway (apis.auckland.ac.nz,
+    Kong 404 at root, 401 on both catalog routes) publishing two OpenAPI 3.1.0 documents whose
+    servers[] and info.contact are both under auckland.ac.nz; a live OAI-PMH 2.0 provider at
+    researchspace.auckland.ac.nz/server/oai/request (Identify returns repositoryName "ResearchSpace
+    at The University of Auckland"); a DSpace 7 REST API on the same host returning real
+    communities as HAL+JSON; and a Shibboleth/SAML 2.0 identity provider at
+    iam.auckland.ac.nz/shibboleth with shibmd:Scope auckland.ac.nz. Confirmed absences, each probed
+    rather than assumed - unidirectory.auckland.ac.nz (the one host the June profile called
+    institution-owned) fails DNS resolution entirely and its entry was deleted; data.auckland.ac.nz
+    redirects to a WordPress login, so there is no open data portal; www.auckland.ac.nz/llms.txt and
+    /.well-known/security.txt both 404; no status page, changelog, deprecation policy, published
+    scope list or token endpoint. Two live surfaces are correctly labelled tenant rather than
+    institution: auckland.figshare.com (AWS WAF challenge, HTTP 202 - live and bot-challenged, not
+    dead; DOIs under Figshare's 10.17608 prefix) and auckland.primo.exlibrisgroup.com
+    (vid=64UAUCK_INST:UOA, 200). Neither carries a saved contract here.
+  evidence:
+    - url: https://developer.auckland.ac.nz/prd/
+      status: 200
+    - url: https://developer.auckland.ac.nz/prd/documentation/api-course-catalog-v3
+      status: 200
+    - url: https://developer.auckland.ac.nz/prd/documentation/api-classes-v2
+      status: 200
+    - url: https://apis.auckland.ac.nz/courses/v3/terms
+      status: 401
+    - url: https://apis.auckland.ac.nz/classes/v2/classes
+      status: 401
+    - url: https://researchspace.auckland.ac.nz/server/oai/request?verb=Identify
+      status: 200
+    - url: https://researchspace.auckland.ac.nz/server/api/core/communities
+      status: 200
+    - url: https://iam.auckland.ac.nz/shibboleth
+      status: 200
+    - url: https://auckland.figshare.com/
+      status: 202
+    - url: https://auckland.primo.exlibrisgroup.com/discovery/search?vid=64UAUCK_INST:UOA
+      status: 200
+    - url: https://unidirectory.auckland.ac.nz/apidocs
+      status: 0
+    - url: https://data.auckland.ac.nz/
+      status: 200
+    - url: https://www.auckland.ac.nz/llms.txt
+      status: 404
+    - url: https://www.auckland.ac.nz/.well-known/security.txt
+      status: 404
+apis:
+  - aid: university-of-auckland:course-catalog-v3
+    name: University of Auckland Course Catalog Api V3
+    x-operator: institution
+    x-operator-evidence: >-
+      servers[] targets apis.auckland.ac.nz (the University's own Kong gateway) and info.contact is
+      Student Recruitment, student-recruitment@list.auckland.ac.nz. The specification is published
+      by the University in its own developer portal. Institution-operated on every axis.
+    description: >-
+      Read-only access to the University of Auckland course catalogue, described by the University
+      as "Exposes some course information by querying CS9 views" — CS9 being its PeopleSoft Campus
+      Solutions instance. Twelve operations across a Courses API (courses by subject, course by id)
+      and a Reference Data API (terms, subjects, consent codes, component codes, academic
+      organisations, groups and careers), plus an operational POST /cache/reload/collections.
+      OpenAPI 3.1.0. Live and access-controlled - the route returns HTTP 401 without a key issued
+      through the developer portal. Note two defects in the University's own document, preserved
+      verbatim rather than silently corrected: servers[0].url is published as
+      "httpss://apis.auckland.ac.nz/courses/v3" (the working base is https://), and info.version
+      reads "3.0" while the path segment says v3.
+    humanURL: https://developer.auckland.ac.nz/prd/documentation/api-course-catalog-v3
+    baseURL: https://apis.auckland.ac.nz/courses/v3
+    tags:
+      - Course Catalog
+      - Student Records
+      - Reference Data
+      - Education
+      - PeopleSoft
+    properties:
+      - type: OpenAPI
+        url: openapi/university-of-auckland-course-catalog-v3-openapi.yml
+        method: searched
+      - type: x-original-openapi
+        url: openapi/_original/university-of-auckland-course-catalog-v3-openapi.json
+        method: searched
+      - type: JSONSchema
+        url: json-schema/university-of-auckland-course-schema.json
+        method: derived
+      - type: JSONSchema
+        url: json-schema/university-of-auckland-term-schema.json
+        method: derived
+      - type: x-example
+        url: examples/university-of-auckland-terms-list-example.json
+        method: derived
+      - type: Authentication
+        url: authentication/university-of-auckland-authentication.yml
+        method: derived
+      - type: Errors
+        url: errors/university-of-auckland-errors.yml
+        method: derived
+      - type: Rules
+        url: rules/university-of-auckland-rules.yml
+        method: derived
+      - type: Documentation
+        url: https://developer.auckland.ac.nz/prd/documentation/api-course-catalog-v3
+      - type: DeveloperPortal
+        url: https://developer.auckland.ac.nz/prd/
+  - aid: university-of-auckland:classes-v2
+    name: University of Auckland Classes Api V2
+    x-operator: institution
+    x-operator-evidence: >-
+      servers[] targets https://apis.auckland.ac.nz/classes/v2 and info.contact is
+      student-recruitment@list.auckland.ac.nz. Published by the University in its own portal.
+    description: >-
+      Search for scheduled class offerings at the University of Auckland — "Class API is intended
+      to provide access to Class attributes, such as ID, Name, Description, Definition etc". A
+      single GET /classes operation with sixteen query parameters (class number, term, year,
+      subject, catalogue number, course id, academic group, status, component, academic
+      organisation, academic career, class type, active flag, and from/size/page paging) returning
+      a ClassesList of ClassModel records with meeting patterns. OpenAPI 3.1.0. Live and
+      access-controlled - HTTP 401 without a key. Defects preserved verbatim from the University's
+      document - info.version reads "3.0" on a v2 API, the operation is tagged "classes" while the
+      root tags[] declares only "api", and 400 and 500 responses reuse the success schema.
+    humanURL: https://developer.auckland.ac.nz/prd/documentation/api-classes-v2
+    baseURL: https://apis.auckland.ac.nz/classes/v2
+    tags:
+      - Timetable
+      - Course Catalog
+      - Student Records
+      - Education
+      - PeopleSoft
+    properties:
+      - type: OpenAPI
+        url: openapi/university-of-auckland-classes-v2-openapi.yml
+        method: searched
+      - type: x-original-openapi
+        url: openapi/_original/university-of-auckland-classes-v2-openapi.json
+        method: searched
+      - type: JSONSchema
+        url: json-schema/university-of-auckland-class-schema.json
+        method: derived
+      - type: Authentication
+        url: authentication/university-of-auckland-authentication.yml
+        method: derived
+      - type: Errors
+        url: errors/university-of-auckland-errors.yml
+        method: derived
+      - type: Rules
+        url: rules/university-of-auckland-rules.yml
+        method: derived
+      - type: Documentation
+        url: https://developer.auckland.ac.nz/prd/documentation/api-classes-v2
+      - type: DeveloperPortal
+        url: https://developer.auckland.ac.nz/prd/
+  - aid: university-of-auckland:researchspace-oai
+    name: ResearchSpace OAI-PMH 2.0 Service
+    x-operator: institution
+    x-operator-evidence: >-
+      Hosted on researchspace.auckland.ac.nz (CNAME dspace-f5vip.itss.auckland.ac.nz, the
+      University's own ITSS load balancer). The Identify response names the repository
+      "ResearchSpace at The University of Auckland" with adminEmail researchspace@auckland.ac.nz
+      and repositoryIdentifier researchspace.auckland.ac.nz.
+    description: >-
+      Live OAI-PMH 2.0 metadata harvesting endpoint for ResearchSpace, the University's
+      self-hosted DSpace institutional repository. Verified 2026-08-30 - Identify returns
+      protocolVersion 2.0 and granularity YYYY-MM-DDThh:mm:ssZ; ListMetadataFormats advertises
+      thirteen prefixes (oai_dc, qdc, dim, xoai, mods, mets, didl, ore, rdf, marc, etdms,
+      uketd_dc, rioxx); ListSets resolves to real institutional collections including A1 Research
+      Outputs Online, A2 Digital Doctoral Theses, A4 Dataset Archive, the Auckland Bioengineering
+      Institute, CDMTCS Research Reports and Measina o le Pasefika. Records carry handles under
+      the 2292 prefix. The software is DSpace's; the deployment, the host, the sets and the
+      records are the University's, so the surface is recorded and no DSpace specification is
+      saved under this slug.
+    humanURL: https://researchspace.auckland.ac.nz/
+    baseURL: https://researchspace.auckland.ac.nz/server/oai/request
+    tags:
+      - OAI-PMH
+      - Research Repository
+      - Metadata
+      - Harvesting
+      - DSpace
+      - Open Access
+    properties:
+      - type: Conformance
+        url: conformance/university-of-auckland-conformance.yml
+        method: probed
+      - type: Documentation
+        url: https://researchspace.auckland.ac.nz/server/oai/request?verb=Identify
+  - aid: university-of-auckland:researchspace-rest
+    name: ResearchSpace DSpace REST API
+    x-operator: institution
+    x-operator-evidence: >-
+      Self-hosted open-source software on the University's own infrastructure and domain. The
+      contract shape is upstream DSpace's, not Auckland engineering, so no specification is saved
+      here - saving a generic DSpace spec under an institution's slug is exactly the
+      misattribution this profile exists to prevent.
+    description: >-
+      The HAL+JSON REST API of the University's self-hosted DSpace 7 instance.
+      /server/api/core/communities returns the live community tree (A1 Research Outputs Online and
+      its siblings) anonymously as application/hal+json; /server/api itself is blocked at the edge
+      and /server/api/config/properties returns 405, so the surface is partially open rather than
+      uniformly public. Recorded as an institution-operated surface; the contract belongs to
+      DSpace.
+    humanURL: https://researchspace.auckland.ac.nz/
+    baseURL: https://researchspace.auckland.ac.nz/server/api
+    tags:
+      - Research Repository
+      - REST
+      - HAL
+      - DSpace
+      - Research Data
+    properties:
+      - type: Documentation
+        url: https://researchspace.auckland.ac.nz/server/api/core/communities
+  - aid: university-of-auckland:identity-federation
+    name: University of Auckland Shibboleth Identity Provider (SAML 2.0 metadata)
+    x-operator: institution
+    x-operator-evidence: >-
+      EntityDescriptor entityID http://iam.auckland.ac.nz/idp, served from the University's own
+      host, asserting shibmd:Scope auckland.ac.nz. An identity provider is institution-operated by
+      definition - no vendor can assert this scope.
+    description: >-
+      The University's institutional identity provider, publishing SAML 2.0 metadata at
+      https://iam.auckland.ac.nz/shibboleth (200, application/xml). The IDPSSODescriptor declares
+      support for urn:oasis:names:tc:SAML:2.0:protocol, urn:oasis:names:tc:SAML:1.1:protocol and
+      urn:mace:shibboleth:1.0, with SingleSignOnService endpoints for HTTP-POST,
+      HTTP-POST-SimpleSign, HTTP-Redirect and the Shibboleth AuthnRequest profile, plus SAML1 SOAP
+      and SAML2 SOAP artifact resolution. Confirmed as the live production SSO rather than stale
+      metadata - courseoutline.auckland.ac.nz redirects into
+      iam.auckland.ac.nz/profile/SAML2/Redirect/SSO. This is a machine-readable, institution-owned
+      surface that almost no university profile in this catalog records.
+    humanURL: https://iam.auckland.ac.nz/shibboleth
+    baseURL: https://iam.auckland.ac.nz/shibboleth
+    tags:
+      - Identity Federation
+      - SAML
+      - Shibboleth
+      - Single Sign-On
+      - Metadata
+    properties:
+      - type: Conformance
+        url: conformance/university-of-auckland-conformance.yml
+        method: probed
+      - type: Documentation
+        url: https://iam.auckland.ac.nz/shibboleth
+  - aid: university-of-auckland:figshare-tenant
+    name: University of Auckland Figshare Research Data Repository (tenant)
+    x-operator: tenant
+    x-operator-evidence: >-
+      auckland.figshare.com is a CNAME to figshare.com. The institution-specific portal, the
+      records and the DOIs (10.17608/k6.auckland.NNNNNNNN) are the University's; the API contract
+      at api.figshare.com/v2 is Figshare's and is shared by every Figshare customer. Recorded as a
+      relationship, NOT as an Auckland contract.
+    description: >-
+      The University of Auckland's Figshare research data repository, a vendor tenancy on the
+      Figshare platform (institution id 12). Live - the landing page returns HTTP 202 behind an AWS
+      WAF challenge, and api.figshare.com/v2/articles?institution=12 returns Auckland-branded
+      records with 10.17608/k6.auckland DOIs. This relationship is a genuine institutional fact and
+      one of the University's real programmable surfaces, so it is kept. What is NOT kept is the
+      Figshare v2 OpenAPI - the June 2026 profile saved it here as ten per-tag documents and eleven
+      apis[] entries, inflating one vendor contract into eleven Auckland APIs. Score the contract
+      against Figshare's own repo, where it belongs.
+    humanURL: https://auckland.figshare.com/
+    tags:
+      - Research Data
+      - Research Repository
+      - Tenant
+      - Figshare
+      - DOI
+    properties:
+      - type: Website
+        url: https://auckland.figshare.com/
+  - aid: university-of-auckland:primo-tenant
+    name: University of Auckland Library Discovery (Ex Libris Primo tenant)
+    x-operator: tenant
+    x-operator-evidence: >-
+      auckland.primo.exlibrisgroup.com with vid=64UAUCK_INST:UOA - an institution-specific view on
+      Ex Libris' shared platform. The holdings are the University's; the discovery and Alma APIs
+      are Ex Libris'.
+    description: >-
+      The University of Auckland Library's discovery layer, an Ex Libris Primo VE tenancy
+      (vid=64UAUCK_INST:UOA, HTTP 200 verified 2026-08-30). No institution-published catalogue API
+      or specification exists - Primo and Alma REST APIs are documented and gated by Ex Libris at
+      developers.exlibrisgroup.com, not by the University. Recorded as a tenant relationship only.
+    humanURL: https://auckland.primo.exlibrisgroup.com/discovery/search?vid=64UAUCK_INST:UOA
+    baseURL: https://auckland.primo.exlibrisgroup.com/discovery/search?vid=64UAUCK_INST:UOA
+    tags:
+      - Library
+      - Discovery
+      - Tenant
+      - Ex Libris
+      - Primo
+    properties:
+      - type: Website
+        url: https://www.auckland.ac.nz/en/library.html
 common:
-  - type: CapabilityMap
-    url: capabilities/university-of-auckland-capability-edges.yml
-    name: University of Auckland Business Capability Map
-  - type: AgenticAccess
-    url: agentic-access/university-of-auckland-agentic-access.yml
-  - type: DomainSecurity
-    url: security/university-of-auckland-domain-security.yml
-  - type: Authentication
-    url: authentication/university-of-auckland-authentication.yml
-  - type: OAuthScopes
-    url: scopes/university-of-auckland-scopes.yml
   - type: Website
     url: https://www.auckland.ac.nz/
+  - type: DeveloperPortal
+    url: https://developer.auckland.ac.nz/prd/
+  - type: APIReference
+    url: https://developer.auckland.ac.nz/prd/documentation
+  - type: Documentation
+    url: https://developer.auckland.ac.nz/prd/guides
   - type: GitHub
     url: https://github.com/university-of-auckland
+  - type: GitHubOrganization
+    url: https://github.com/UoA-eResearch
   - type: LinkedIn
     url: https://www.linkedin.com/school/university-of-auckland/
+  - type: PrivacyPolicy
+    url: https://www.auckland.ac.nz/en/about-us/about-the-university/policy-hub/university-governance/privacy/privacy-policy.html
+  - type: Copyright
+    url: https://www.auckland.ac.nz/en/copyright.html
+  - type: Policies
+    url: https://www.auckland.ac.nz/en/about-us/about-the-university/policy-hub.html
+  - type: ResearchRepository
+    url: https://researchspace.auckland.ac.nz/
+  - type: ResearchRepository
+    url: https://auckland.figshare.com/
+  - type: LibraryCatalog
+    url: https://auckland.primo.exlibrisgroup.com/discovery/search?vid=64UAUCK_INST:UOA
+  - type: IdentityFederation
+    url: https://iam.auckland.ac.nz/shibboleth
+  - type: CourseCatalog
+    url: https://developer.auckland.ac.nz/prd/documentation/api-course-catalog-v3
+  - type: ResearchComputing
+    url: https://www.eresearch.auckland.ac.nz/research-computing/
+  - type: AIPolicy
+    url: https://www.auckland.ac.nz/en/about-us/about-the-university/policy-hub/research-innovation/doctoral-study/undertaking-research/generative-artificial-intelligence-in-doctoral-research-guidelines.html
+  - type: Support
+    url: https://www.eresearch.auckland.ac.nz/getting-in-touch/
+  - type: OpenAPI
+    url: openapi/university-of-auckland-course-catalog-v3-openapi.yml
+  - type: OpenAPI
+    url: openapi/university-of-auckland-classes-v2-openapi.yml
+  - type: JSONSchema
+    url: json-schema/university-of-auckland-course-schema.json
+  - type: JSONSchema
+    url: json-schema/university-of-auckland-term-schema.json
+  - type: JSONSchema
+    url: json-schema/university-of-auckland-class-schema.json
+  - type: Examples
+    url: examples/university-of-auckland-terms-list-example.json
+  - type: Authentication
+    url: authentication/university-of-auckland-authentication.yml
+  - type: Errors
+    url: errors/university-of-auckland-errors.yml
+  - type: Conformance
+    url: conformance/university-of-auckland-conformance.yml
+  - type: Lifecycle
+    url: lifecycle/university-of-auckland-lifecycle.yml
+  - type: Rules
+    url: rules/university-of-auckland-rules.yml
+  - type: Vocabulary
+    url: vocabulary/university-of-auckland-vocabulary.yml
+  - type: DomainSecurity
+    url: security/university-of-auckland-domain-security.yml
   - type: Plans
     url: plans/university-of-auckland-plans-pricing.yml
   - type: RateLimits
@@ -307,12 +436,6 @@ common:
     url: finops/university-of-auckland-finops.yml
   - type: Review
     url: review.yml
-  - type: Vocabulary
-    url: vocabulary/university-of-auckland-vocabulary.yml
-  - type: Rules
-    url: rules/university-of-auckland-rules.yml
-  - type: JSONLD
-    url: json-ld/university-of-auckland-context.jsonld
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
