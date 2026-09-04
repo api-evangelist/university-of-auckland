@@ -45,7 +45,7 @@ accessModel:
     - probed
   generated: '2026-08-30'
   method: derived
-position: Provider
+position: Producing
 access: 3rd-Party
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/university-of-auckland.png
 url: https://raw.githubusercontent.com/api-evangelist/university-of-auckland/refs/heads/main/apis.yml
