@@ -189,6 +189,12 @@ apis:
   - Identity Federation
   - SAML
   - Shibboleth
+  - SSO
+  - Metadata
+  tags_raw:
+  - Identity Federation
+  - SAML
+  - Shibboleth
   - Single Sign-On
   - Metadata
   properties:
@@ -215,6 +221,12 @@ apis:
   tags:
   - Research Data
   - Research Repository
+  - Tenants
+  - Figshare
+  - DOI
+  tags_raw:
+  - Research Data
+  - Research Repository
   - Tenant
   - Figshare
   - DOI
@@ -236,6 +248,12 @@ apis:
   tags:
   - Library
   - Discovery
+  - Tenants
+  - Ex Libris
+  - Primo
+  tags_raw:
+  - Library
+  - Discovery
   - Tenant
   - Ex Libris
   - Primo
@@ -248,6 +266,8 @@ apis:
   humanURL: https://developer.auckland.ac.nz/prd/documentation/api-course-catalog-v3
   baseURL: https://apis.auckland.ac.nz/courses/v3
   tags:
+  - Classes
+  tags_raw:
   - classes
   properties:
   - type: OpenAPI
