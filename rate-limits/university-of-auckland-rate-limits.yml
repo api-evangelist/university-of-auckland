@@ -4,7 +4,7 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: University of Auckland
 providerId: university-of-auckland
 created: '2026-06-03'
-modified: '2026-06-03'
+modified: '2026-08-30'
 reconciled: false
 tags:
 - Education
@@ -12,21 +12,32 @@ tags:
 - University
 - Rate Limiting
 description: >-
-  University of Auckland does not publish a unified public rate-limit table across its APIs. Open
-  metadata and harvesting endpoints (OAI-PMH, IIIF, library) may throttle large-scale
-  or automated harvesting; clients should harvest politely, honor Retry-After, and
-  contact the relevant service for bulk access.
-notes: Confirm per-service limits with each API's documentation; harvest responsibly.
+  The University of Auckland publishes no rate-limit table for any surface it operates. Verified
+  2026-08-30: neither OpenAPI document in developer.auckland.ac.nz/prd declares a limit, header or
+  429 response, and the Kong gateway at apis.auckland.ac.nz returns 401 before any limit can be
+  observed without a key. The ResearchSpace OAI-PMH service publishes no policy either; harvesters
+  should use resumption tokens, honor Retry-After and harvest off-peak. Figshare and Ex Libris
+  limits belong to those vendors, not to the University, and are not recorded here.
+notes: >-
+  Nothing below is a published University figure. 429 is the conventional throttling code, not an
+  observed response. Limits for the gateway APIs can only be confirmed with a registered
+  application client.
+method: probed
 sources:
 - https://raw.githubusercontent.com/api-evangelist/university-of-auckland/refs/heads/main/apis.yml
+- openapi/_original/university-of-auckland-course-catalog-v3-openapi.json
+- openapi/_original/university-of-auckland-classes-v2-openapi.json
+- probed 2026-08-30 against https://apis.auckland.ac.nz/ and https://researchspace.auckland.ac.nz/server/oai/request
 responseCodes:
   throttled: 429
 limits:
 - name: Default
   scope: client
   metric: requests-per-minute
-  limit: see service documentation
-  notes: No published global limit; large harvests may be rate-limited.
+  limit: not published
+  notes: >-
+    No published global limit. Not observed either: every gateway route returns 401 before a
+    limit applies.
 policies:
 - name: Backoff Strategy
   description: Exponential backoff with jitter; honor Retry-After; harvest during off-peak hours.

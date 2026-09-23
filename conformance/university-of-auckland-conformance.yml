@@ -1,0 +1,96 @@
+---
+generated: '2026-08-30'
+method: probed
+source: live HTTP probes of University of Auckland institution-operated hosts, 2026-08-30
+x-operator: institution
+provider: University of Auckland
+providerId: university-of-auckland
+regime: education
+description: >-
+  Domain-standard conformance for the University of Auckland, probed against the Kin Score
+  `education` regime standards list (scim, lti, oneroster, ed-fi, caliper, qti, oai-pmh,
+  shibboleth, saml, orcid, datacite, crossref). Only standards evidenced by a machine-readable
+  response from a host under auckland.ac.nz are recorded as met. Reward-only: nothing is
+  claimed that was not fetched.
+standards:
+  - standard: oai-pmh
+    name: Open Archives Initiative Protocol for Metadata Harvesting 2.0
+    status: conformant
+    operator: institution
+    evidence:
+      - url: https://researchspace.auckland.ac.nz/server/oai/request?verb=Identify
+        status: 200
+        note: >-
+          Returns an OAI-PMH 2.0 Identify response. repositoryName "ResearchSpace at The
+          University of Auckland", baseURL https://researchspace.auckland.ac.nz/server/oai/request,
+          protocolVersion 2.0, adminEmail researchspace@auckland.ac.nz, repositoryIdentifier
+          researchspace.auckland.ac.nz, granularity YYYY-MM-DDThh:mm:ssZ.
+      - url: https://researchspace.auckland.ac.nz/server/oai/request?verb=ListMetadataFormats
+        status: 200
+        note: >-
+          13 metadata formats advertised: oai_dc, qdc, dim, xoai, mods, mets, didl, ore, rdf,
+          marc, etdms, uketd_dc, rioxx.
+      - url: https://researchspace.auckland.ac.nz/server/oai/request?verb=ListSets
+        status: 200
+        note: >-
+          Sets resolve to real institutional collections (A1 Research Outputs Online, A2 Digital
+          Doctoral Theses, A4 Dataset Archive, Auckland Bioengineering Institute, CDMTCS Research
+          Reports, Measina o le Pasefika).
+  - standard: saml
+    name: SAML 2.0 identity provider metadata
+    status: conformant
+    operator: institution
+    evidence:
+      - url: https://iam.auckland.ac.nz/shibboleth
+        status: 200
+        note: >-
+          Serves application/xml SAML 2.0 metadata. EntityDescriptor entityID
+          "http://iam.auckland.ac.nz/idp"; IDPSSODescriptor protocolSupportEnumeration includes
+          urn:oasis:names:tc:SAML:2.0:protocol and urn:oasis:names:tc:SAML:1.1:protocol;
+          SingleSignOnService bindings HTTP-POST, HTTP-POST-SimpleSign and HTTP-Redirect at
+          https://iam.auckland.ac.nz/profile/SAML2/...; SAML2 SOAP ArtifactResolutionService present.
+  - standard: shibboleth
+    name: Shibboleth identity provider
+    status: conformant
+    operator: institution
+    evidence:
+      - url: https://iam.auckland.ac.nz/shibboleth
+        status: 200
+        note: >-
+          Same document declares urn:mace:shibboleth:1.0 protocol support, a
+          urn:mace:shibboleth:1.0:profiles:AuthnRequest SingleSignOnService at
+          https://iam.auckland.ac.nz/profile/Shibboleth/SSO, and a shibmd:Scope of
+          auckland.ac.nz (regexp="false") — i.e. an institution-run Shibboleth IdP asserting
+          the auckland.ac.nz scope.
+      - url: https://courseoutline.auckland.ac.nz/
+        status: 200
+        note: >-
+          Redirects to https://iam.auckland.ac.nz/profile/SAML2/Redirect/SSO, confirming the IdP
+          is the live SSO for institution applications rather than a stale metadata artifact.
+not_met:
+  - standard: scim
+    note: No SCIM /ServiceProviderConfig or /Users surface found on any auckland.ac.nz host.
+  - standard: lti
+    note: >-
+      No LTI tool-configuration or platform JWKS surface published. Canvas is the institution's
+      LMS but no institution-published LTI registration document was found.
+  - standard: oneroster
+    note: No IMS OneRoster endpoint found.
+  - standard: ed-fi
+    note: Ed-Fi is a US K-12/state-agency standard; not applicable to a New Zealand university.
+  - standard: caliper
+    note: No Caliper analytics endpoint published.
+  - standard: qti
+    note: No QTI item bank or exchange surface published.
+  - standard: orcid
+    note: >-
+      No ORCID identifier appears in the ResearchSpace OAI-PMH `dim` output sampled on
+      2026-08-30, and no institution-published ORCID integration contract was found.
+      NOT claimed.
+  - standard: datacite
+    note: >-
+      Auckland-branded DOIs exist (prefix 10.17608, e.g. 10.17608/k6.auckland.33386890.v1) but
+      they are minted through the Figshare tenant under Figshare's DataCite membership, not
+      through an institution-operated DataCite contract. NOT claimed for the institution.
+  - standard: crossref
+    note: No institution-operated Crossref deposit or query surface found.

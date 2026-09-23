@@ -1,0 +1,219 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/university-of-auckland/main/json-schema/university-of-auckland-class-schema.json",
+  "title": "University of Auckland ClassModel",
+  "description": "Derived from components.schemas.ClassModel in the University of Auckland Classes Api V2 OpenAPI 3.1.0, as published in the University's own Kong developer portal.",
+  "x-generated": "2026-08-30",
+  "x-method": "derived",
+  "x-source": "https://developer.auckland.ac.nz/prd/documentation/api-classes-v2",
+  "x-operator": "institution",
+  "type": "object",
+  "properties": {
+    "acadCareer": {
+      "type": "string"
+    },
+    "acadGroup": {
+      "type": "string"
+    },
+    "acadOrg": {
+      "type": "string"
+    },
+    "associatedClassNbr": {
+      "type": "string"
+    },
+    "campus": {
+      "type": "string"
+    },
+    "catalogNbr": {
+      "type": "string"
+    },
+    "catalogPrint": {
+      "type": "string"
+    },
+    "classNbr": {
+      "type": "string"
+    },
+    "classDescr": {
+      "type": "string"
+    },
+    "classStatus": {
+      "type": "string"
+    },
+    "classType": {
+      "type": "string"
+    },
+    "classNotes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "classRequirement": {
+      "type": "string"
+    },
+    "classSection": {
+      "type": "string"
+    },
+    "combinedSectionId": {
+      "type": "string"
+    },
+    "component": {
+      "type": "string"
+    },
+    "consent": {
+      "type": "string"
+    },
+    "dropConsent": {
+      "type": "string"
+    },
+    "crseId": {
+      "type": "string"
+    },
+    "crseOfferNbr": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "startDate": {
+      "type": "string"
+    },
+    "endDate": {
+      "type": "string"
+    },
+    "enrolCap": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "enrolTotal": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "gradingBasis": {
+      "type": "string"
+    },
+    "instructorMode": {
+      "type": "string"
+    },
+    "meetingPatterns": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/MeetingPattern"
+      }
+    },
+    "points": {
+      "type": "number"
+    },
+    "session": {
+      "type": "string"
+    },
+    "visible": {
+      "type": "boolean"
+    },
+    "status": {
+      "type": "string"
+    },
+    "subject": {
+      "type": "string"
+    },
+    "term": {
+      "type": "string"
+    },
+    "termDescription": {
+      "type": "string"
+    },
+    "text": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "year": {
+      "type": "integer",
+      "format": "int32"
+    }
+  },
+  "$defs": {
+    "ClassesList": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ClassModel"
+          }
+        },
+        "total": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "empty": {
+          "type": "boolean"
+        },
+        "_links": {
+          "$ref": "#/$defs/Links"
+        }
+      }
+    },
+    "MeetingPattern": {
+      "type": "object",
+      "properties": {
+        "startDate": {
+          "type": "string"
+        },
+        "endDate": {
+          "type": "string"
+        },
+        "startTime": {
+          "type": "string"
+        },
+        "endTime": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        },
+        "daysOfWeek": {
+          "type": "string"
+        },
+        "meetingNumber": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "Link": {
+      "type": "object",
+      "properties": {
+        "href": {
+          "type": "string"
+        },
+        "hreflang": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "deprecation": {
+          "type": "string"
+        },
+        "profile": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "templated": {
+          "type": "boolean"
+        }
+      }
+    },
+    "Links": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/Link"
+      }
+    }
+  }
+}

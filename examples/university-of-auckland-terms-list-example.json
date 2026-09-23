@@ -1,0 +1,40 @@
+{
+  "x-generated": "2026-08-30",
+  "x-method": "derived",
+  "x-source": "https://developer.auckland.ac.nz/prd/documentation/api-course-catalog-v3",
+  "x-operator": "institution",
+  "x-note": "SHAPE ONLY, derived from components.schemas.Term / TermsList in the University of Auckland Course Catalog Api V3 OpenAPI. This is NOT a captured response: https://apis.auckland.ac.nz/courses/v3/terms returned HTTP 401 Unauthorized on 2026-08-30 (an API key issued through developer.auckland.ac.nz is required), so no live payload could be recorded. Field values below are illustrative placeholders consistent with the parameter examples the University publishes in its own specification (term code e.g. \"1173\", acadCareer e.g. \"UC01\").",
+  "request": {
+    "method": "GET",
+    "url": "https://apis.auckland.ac.nz/courses/v3/terms?year=2026&acadCareer=UC01&size=2",
+    "headers": {
+      "Accept": "application/json"
+    },
+    "auth": "apiKey (see https://developer.auckland.ac.nz/prd/guides)"
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "terms": [
+        {
+          "code": "1173",
+          "description": "Semester One 2026",
+          "shortDescription": "S1 2026",
+          "startDate": "2026-02-23",
+          "endDate": "2026-06-22",
+          "acadCareer": "UC01",
+          "enrolOpenDate": "2025-10-06"
+        },
+        {
+          "code": "1175",
+          "description": "Semester Two 2026",
+          "shortDescription": "S2 2026",
+          "startDate": "2026-07-20",
+          "endDate": "2026-11-16",
+          "acadCareer": "UC01",
+          "enrolOpenDate": "2025-10-06"
+        }
+      ]
+    }
+  }
+}

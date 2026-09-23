@@ -1,0 +1,363 @@
+openapi: 3.2.0
+info:
+  title: Course Catalog Api V3 Reference Data API
+  description: Exposes some course information by querying CS9 views. Read only API.
+  version: '3.0'
+  contact:
+    name: Student Recruitment
+    email: student-recruitment@list.auckland.ac.nz
+servers:
+- url: httpss://apis.auckland.ac.nz/courses/v3
+  description: ''
+tags:
+- name: Reference Data API
+  description: Reference Data API
+paths:
+  /cache/reload/collections:
+    post:
+      tags:
+      - Reference Data API
+      description: Reload in-memory caches
+      operationId: reloadCollectionsPost
+      responses:
+        '200':
+          description: Success
+          content:
+            '*/*':
+              schema:
+                type: string
+      summary: Reload collections post
+      x-summary-source: derived
+  /terms:
+    get:
+      tags:
+      - Reference Data API
+      description: Search for terms
+      operationId: termsGet
+      parameters:
+      - name: year
+        in: query
+        description: Limit to terms in this academic year
+        required: false
+        schema:
+          type: string
+          maxLength: 4
+          minLength: 0
+      - name: acadCareer
+        in: query
+        description: Limit to this academic career code
+        required: false
+        schema:
+          type: string
+          default: UC01
+          maxLength: 4
+          minLength: 0
+      - name: from
+        in: query
+        description: Offset the list of returned results by this amount. Default is zero.
+        required: false
+        schema:
+          type: string
+          default: '0'
+      - name: size
+        in: query
+        description: Number of items to retrieve. Default is 100, maximum is 5000.
+        required: false
+        schema:
+          type: string
+          default: '100'
+      responses:
+        '200':
+          description: All Terms matching the filter
+          content:
+            '*/*':
+              schema:
+                type: string
+        '400':
+          description: Unexpected error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/TermsList'
+      summary: Terms get
+      x-summary-source: derived
+  /terms/{termCode}:
+    get:
+      tags:
+      - Reference Data API
+      description: Search for terms by code
+      operationId: termsTermCodeGet
+      parameters:
+      - name: termCode
+        in: path
+        description: term code, e.g. "1173"
+        required: true
+        schema:
+          type: string
+          maxLength: 20
+          minLength: 0
+      - name: acadCareer
+        in: query
+        description: 'For a specified acad career. Example: UC02'
+        required: false
+        schema:
+          type: string
+          default: UC01
+          maxLength: 4
+          minLength: 0
+      responses:
+        '200':
+          description: Term, if found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Term'
+        '400':
+          description: Unexpected error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Term'
+        '404':
+          description: Term not found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Term'
+      summary: Terms term code get
+      x-summary-source: derived
+  /subjects:
+    get:
+      tags:
+      - Reference Data API
+      description: Search for subjects
+      operationId: subjectsGet
+      parameters:
+      - name: effectiveYear
+        in: query
+        description: 'Limit subjects to only those active on this year, ex: 2014'
+        required: false
+        schema:
+          type: string
+          maxLength: 4
+          minLength: 0
+      - name: effectiveStatus
+        in: query
+        description: 'Limit subjects to only those with the given effective status, ex: A'
+        required: false
+        schema:
+          type: string
+          maxLength: 1
+          minLength: 0
+      - name: courseCareer
+        in: query
+        description: 'Limit subjects to only those with courses available under the given academic career, ex: UC01'
+        required: false
+        schema:
+          type: string
+          maxLength: 4
+          minLength: 0
+      - name: includeOnlyActiveCourses
+        in: query
+        description: Limit subjects to only those with active courses
+        required: false
+        schema:
+          type: boolean
+      - name: includeOnlyMainProgram
+        in: query
+        description: Limit subjects to only those with main programme related courses
+        required: false
+        schema:
+          type: boolean
+      - name: includeOnlyMicrocredentials
+        in: query
+        description: Limit subjects to only those with active courses
+        required: false
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: Subjects
+          content:
+            '*/*':
+              schema:
+                type: string
+        '400':
+          description: Unexpected error
+          content:
+            '*/*':
+              schema:
+                type: string
+      summary: Subjects get
+      x-summary-source: derived
+  /consentCodes:
+    get:
+      tags:
+      - Reference Data API
+      description: Search for consent codes
+      operationId: consentCodesGet
+      responses:
+        '200':
+          description: Map of code to description
+          content:
+            '*/*':
+              schema:
+                type: string
+        '400':
+          description: Unexpected error
+          content:
+            '*/*':
+              schema:
+                type: string
+      summary: Consent codes get
+      x-summary-source: derived
+  /componentCodes:
+    get:
+      tags:
+      - Reference Data API
+      description: Search for course component codes
+      operationId: componentCodesGet
+      parameters:
+      - name: includeInactive
+        in: query
+        description: Include inactive records
+        required: false
+        schema:
+          type: string
+          default: 'false'
+      responses:
+        '200':
+          description: Map of code to description
+          content:
+            '*/*':
+              schema:
+                type: string
+        '400':
+          description: Unexpected error
+          content:
+            '*/*':
+              schema:
+                type: string
+      summary: Component codes get
+      x-summary-source: derived
+  /acadOrgs:
+    get:
+      tags:
+      - Reference Data API
+      description: Search for academic organisations
+      operationId: acadOrgsGet
+      parameters:
+      - name: includeInactive
+        in: query
+        description: Include inactive records
+        required: false
+        schema:
+          type: string
+          default: 'false'
+      responses:
+        '200':
+          description: Map of code to description
+          content:
+            '*/*':
+              schema:
+                type: string
+        '400':
+          description: Unexpected error
+          content:
+            '*/*':
+              schema:
+                type: string
+      summary: Acad orgs get
+      x-summary-source: derived
+  /acadGroups:
+    get:
+      tags:
+      - Reference Data API
+      description: Search for academic groups
+      operationId: acadGroupsGet
+      parameters:
+      - name: includeInactive
+        in: query
+        description: Include inactive records
+        required: false
+        schema:
+          type: string
+          default: 'false'
+      responses:
+        '200':
+          description: Map of code to description
+          content:
+            '*/*':
+              schema:
+                type: string
+        '400':
+          description: Unexpected error
+          content:
+            '*/*':
+              schema:
+                type: string
+      summary: Acad groups get
+      x-summary-source: derived
+  /acadCareers:
+    get:
+      tags:
+      - Reference Data API
+      description: Search for academic careers
+      operationId: acadCareersGet
+      parameters:
+      - name: includeInactive
+        in: query
+        description: Include inactive records
+        required: false
+        schema:
+          type: string
+          default: 'false'
+      responses:
+        '200':
+          description: Map of code to description
+          content:
+            '*/*':
+              schema:
+                type: string
+        '400':
+          description: Unexpected error
+          content:
+            '*/*':
+              schema:
+                type: string
+      summary: Acad careers get
+      x-summary-source: derived
+components:
+  schemas:
+    Term:
+      type: object
+      properties:
+        code:
+          type: string
+        description:
+          type: string
+        shortDescription:
+          type: string
+        startDate:
+          type: string
+        endDate:
+          type: string
+        acadCareer:
+          type: string
+        enrolOpenDate:
+          type: string
+    TermsList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Term'
+        total:
+          type: integer
+          format: int64
+  securitySchemes:
+    apikey:
+      type: apiKey
+x-headmatter:
+  readable_by: []

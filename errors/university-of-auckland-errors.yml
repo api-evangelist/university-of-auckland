@@ -1,0 +1,47 @@
+---
+generated: '2026-08-30'
+method: derived
+source:
+  - openapi/_original/university-of-auckland-classes-v2-openapi.json
+  - openapi/_original/university-of-auckland-course-catalog-v3-openapi.json
+  - probed 2026-08-30 against https://apis.auckland.ac.nz/
+x-operator: institution
+provider: University of Auckland
+providerId: university-of-auckland
+description: >-
+  Error surface for the University of Auckland's own Course Catalog and Classes APIs, derived
+  from the response objects declared in the two OpenAPI documents the University publishes and
+  from live gateway probes. No RFC 9457 / problem+json media type is used and no error schema
+  is declared: the specifications reuse the SUCCESS schema for 400/404/500 responses, which is
+  a real contract defect and is recorded as such rather than repaired.
+format:
+  problem_details_rfc9457: false
+  media_type: '*/*'
+  declared_error_schema: false
+statuses:
+  - status: 400
+    where:
+      - GET /classes (Classes Api V2) — "Bad request", schema $ref ClassesList
+      - GET /terms, GET /terms/{termCode}, GET /subjects, GET /courses (Course Catalog Api V3) — "Unexpected error"
+    note: >-
+      Declared with the same schema as the 200 response, so a client cannot distinguish an
+      error body from a result set from the contract alone.
+  - status: 401
+    where: gateway
+    body: '{"message":"Unauthorized"}'
+    note: >-
+      Returned by apis.auckland.ac.nz for every catalog route without credentials. NOT declared
+      in either specification.
+  - status: 404
+    where:
+      - GET /terms/{termCode} — "Term not found", schema $ref Term
+      - gateway root — '{"message":"no Route matched with those values","request_id":"..."}'
+    note: >-
+      The gateway's own 404 carries a request_id useful for support correlation; the
+      specifications do not document it.
+  - status: 500
+    where: GET /classes (Classes Api V2) — "Unexpected error", schema $ref ClassesList
+gaps:
+  - No error code vocabulary or machine-readable error schema published.
+  - 401 and 429 are undocumented despite being enforced at the gateway.
+  - No Retry-After or rate-limit headers documented.

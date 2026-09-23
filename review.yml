@@ -1,48 +1,122 @@
 ---
 name: University of Auckland
-description: University of Auckland public developer/API footprint review for APIs.json cataloging.
+description: >-
+  University of Auckland institutional API footprint review for APIs.json cataloging, run under
+  the API Evangelist university pipeline (operator attribution before artifact volume).
 url: https://raw.githubusercontent.com/api-evangelist/university-of-auckland/refs/heads/main/review.yml
 created: '2026-06-03'
-modified: '2026-06-03'
+modified: '2026-08-30'
 reviews:
-  - date: '2026-06-03'
-    rating: 2
+  - date: '2026-08-30'
+    rating: 3
+    method: probed
     summary: >-
-      The University of Auckland has a modest, decentralized API footprint with
-      no single unified developer portal. Live-verified interfaces are the
-      institutional Figshare research repository REST API and OAI-PMH service
-      (institution=12, confirmed via k6.auckland DOIs), both returning HTTP 200.
-      The official GitHub organization is domain-verified and reachable. A
-      public University Directory staff API is documented at
-      unidirectory.auckland.ac.nz/apidocs but the host did not resolve from the
-      verification environment, so it is cataloged from documentation references
-      with a caveat rather than a live probe. No fabricated endpoints; entries
-      reflect only confirmed or clearly documented resources.
+      Re-profiled under the university pipeline. The June 2026 review credited this institution
+      with a Figshare REST API and OAI-PMH service that are Figshare's contract on Figshare's
+      generic host, and with a University Directory API whose host does not resolve. Both claims
+      are withdrawn. What the University actually operates, verified live on 2026-08-30, is
+      better than the June profile implied in kind and smaller in volume - a real institution-run
+      API programme (Kong developer portal at developer.auckland.ac.nz/prd, Kong gateway at
+      apis.auckland.ac.nz) publishing two OpenAPI 3.1.0 contracts over PeopleSoft CS9 student
+      records, a self-hosted DSpace repository with a live OAI-PMH 2.0 service and a partially
+      open REST API, and its own Shibboleth/SAML 2.0 identity provider. Figshare and Ex Libris
+      Primo are recorded as tenant relationships with no contract saved. Twenty-two vendor
+      surfaces and every artifact derived from them were removed. The correction lowers apparent
+      footprint from eleven APIs to five institution-operated surfaces plus two tenancies, and
+      that is the pipeline working.
     endpoints:
       - url: https://www.auckland.ac.nz/
         status: 200
-        note: Official institution website (live).
-      - url: https://github.com/university-of-auckland
+        note: Official institution website (live, HSTS max-age 63072000).
+      - url: https://developer.auckland.ac.nz/prd/
         status: 200
-        note: Domain-verified official GitHub org with open-source repos.
+        note: >-
+          Institution-operated Kong Developer Portal, workspace "prd", OIDC login, with guides for
+          registering an application client and calling with client credentials. THE find of this
+          re-profile - the June profile said no unified developer portal existed.
+      - url: https://developer.auckland.ac.nz/prd/documentation/api-course-catalog-v3
+        status: 200
+        note: Course Catalog Api V3 - full OpenAPI 3.1.0 embedded in the page, 12 operations.
+      - url: https://developer.auckland.ac.nz/prd/documentation/api-classes-v2
+        status: 200
+        note: Classes Api V2 - full OpenAPI 3.1.0 embedded in the page, 1 operation, 16 parameters.
+      - url: https://api.auckland.ac.nz/
+        status: 200
+        note: Meta-refresh to https://api.auckland.ac.nz/explore/all/, which serves the portal.
+      - url: https://apis.auckland.ac.nz/
+        status: 404
+        note: '{"message":"no Route matched with those values"} - Kong gateway root, not a dead host.'
+      - url: https://apis.auckland.ac.nz/courses/v3/terms
+        status: 401
+        note: '{"message":"Unauthorized"} - route exists, key required. Live, not dead.'
+      - url: https://apis.auckland.ac.nz/classes/v2/classes
+        status: 401
+        note: '{"message":"Unauthorized"} - route exists, key required.'
+      - url: https://researchspace.auckland.ac.nz/server/oai/request?verb=Identify
+        status: 200
+        note: >-
+          OAI-PMH 2.0, repositoryName "ResearchSpace at The University of Auckland",
+          adminEmail researchspace@auckland.ac.nz. Institution-hosted (dspace-f5vip.itss.auckland.ac.nz).
+      - url: https://researchspace.auckland.ac.nz/server/oai/request?verb=ListMetadataFormats
+        status: 200
+        note: 13 formats - oai_dc, qdc, dim, xoai, mods, mets, didl, ore, rdf, marc, etdms, uketd_dc, rioxx.
+      - url: https://researchspace.auckland.ac.nz/server/api/core/communities
+        status: 200
+        note: DSpace 7 REST, real community tree returned anonymously as HAL+JSON.
+      - url: https://researchspace.auckland.ac.nz/server/api
+        status: 200
+        note: 'Edge-blocked: returns "<html><b>Failure</b></html>" (27 bytes). Soft failure, not a real root document.'
+      - url: https://iam.auckland.ac.nz/shibboleth
+        status: 200
+        note: >-
+          SAML 2.0 IdP metadata, entityID http://iam.auckland.ac.nz/idp, shibmd:Scope auckland.ac.nz.
+          Institution-operated by definition.
+      - url: https://courseoutline.auckland.ac.nz/
+        status: 200
+        note: Redirects into iam.auckland.ac.nz/profile/SAML2/Redirect/SSO - the IdP is live production SSO.
       - url: https://auckland.figshare.com/
         status: 202
-        note: Institutional Figshare research repository landing.
-      - url: https://api.figshare.com/v2/articles?institution=12
+        note: >-
+          AWS WAF challenge - LIVE and bot-challenged, not dead. Tenant. DOIs verified via
+          api.figshare.com/v2/articles?institution=12 (prefix 10.17608/k6.auckland).
+      - url: https://auckland.primo.exlibrisgroup.com/discovery/search?vid=64UAUCK_INST:UOA
         status: 200
-        note: Figshare REST API returning University of Auckland records (k6.auckland DOIs).
-      - url: https://api.figshare.com/v2/oai?verb=Identify
-        status: 200
-        note: Figshare OAI-PMH metadata harvesting endpoint (live).
-      - url: https://docs.figshare.com/
-        status: 200
-        note: Figshare API and OAI-PMH documentation (live).
-      - url: https://research-hub.auckland.ac.nz/service/institutional-figshare
-        status: 200
-        note: University ResearchHub page describing the institutional Figshare service.
-      - url: https://profiles.auckland.ac.nz/
-        status: 200
-        note: Public staff research profiles site (live).
+        note: Ex Libris Primo VE tenancy for the University Library. Tenant.
       - url: https://unidirectory.auckland.ac.nz/apidocs
         status: 0
-        note: Documented public University Directory API docs; host did not resolve from verification environment.
+        note: >-
+          DNS resolution failure (NXDOMAIN) - the host has no A record. The June 2026 profile
+          catalogued this from documentation references with a caveat; it is now confirmed dead
+          and the apis[] entry has been removed rather than carried forward at half credit.
+      - url: https://data.auckland.ac.nz/
+        status: 200
+        note: >-
+          Redirects to data.blogs.auckland.ac.nz/wp-login.php - a WordPress login, not an open data
+          portal. No CKAN or Socrata surface exists. Recorded as an absence.
+      - url: https://www.auckland.ac.nz/llms.txt
+        status: 404
+        note: Soft-404 body (230KB "Page not found"), read rather than trusted from the status code.
+      - url: https://www.auckland.ac.nz/.well-known/security.txt
+        status: 404
+      - url: https://github.com/UoA-eResearch
+        status: 200
+        note: The University's eResearch GitHub organisation.
+      - url: https://github.com/university-of-auckland
+        status: 200
+        note: Domain-verified official GitHub org.
+    removed:
+      - what: 22 Figshare-attributed surfaces
+        why: >-
+          One generic api.figshare.com/v2 contract (info.title "Figshare API", contact
+          "Figshare Support") split by refine-openapis into ten per-tag OpenAPIs and eleven
+          apis[] entries, plus every artifact derived from it - 22 collections, 2 JSON Schemas,
+          1 JSON Structure, 1 example, 1 JSON-LD context, 1 vocabulary, 2 Spectral rulesets,
+          scopes, authentication, agentic-access and a capability map. All Figshare's
+          engineering under Auckland's name.
+      - what: university-of-auckland:unidirectory
+        why: Host does not resolve. Confirmed dead, not merely unverified.
+      - what: university-of-auckland:figshare-oai
+        why: >-
+          baseURL was api.figshare.com/v2/oai - Figshare's generic OAI endpoint, shared by every
+          customer. Replaced by the institution's own OAI-PMH service on researchspace.auckland.ac.nz
+          and by a tenant entry for the Figshare relationship.

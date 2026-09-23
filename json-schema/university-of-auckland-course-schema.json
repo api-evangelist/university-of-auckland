@@ -1,0 +1,176 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/university-of-auckland/main/json-schema/university-of-auckland-course-schema.json",
+  "title": "University of Auckland Course",
+  "description": "Derived from components.schemas.Course in the University of Auckland Course Catalog Api V3 OpenAPI 3.1.0, as published in the University's own Kong developer portal.",
+  "x-generated": "2026-08-30",
+  "x-method": "derived",
+  "x-source": "https://developer.auckland.ac.nz/prd/documentation/api-course-catalog-v3",
+  "x-operator": "institution",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "year": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "active": {
+      "type": "string"
+    },
+    "level": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "feeBand": {
+      "type": "string"
+    },
+    "crseId": {
+      "type": "string"
+    },
+    "crseOfferNbr": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "effdt": {
+      "type": "string"
+    },
+    "effdtOffer": {
+      "type": "string"
+    },
+    "acadCareer": {
+      "type": "string"
+    },
+    "acadGroup": {
+      "type": "string"
+    },
+    "acadOrg": {
+      "type": "string"
+    },
+    "subject": {
+      "type": "string"
+    },
+    "catalogNbr": {
+      "type": "string"
+    },
+    "titleLong": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "text": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "catalogPrint": {
+      "type": "string"
+    },
+    "componentPrimary": {
+      "type": "string"
+    },
+    "gradingBasis": {
+      "type": "string"
+    },
+    "rqrmntGroup": {
+      "type": "string"
+    },
+    "rqrmntDescr": {
+      "type": "string"
+    },
+    "splitOwner": {
+      "type": "string"
+    },
+    "unitsAcadProg": {
+      "type": "number",
+      "format": "double"
+    },
+    "ssrComponent": {
+      "type": "string"
+    },
+    "mainProgram": {
+      "type": "string"
+    },
+    "effStatus": {
+      "type": "string"
+    },
+    "microcredential": {
+      "type": "boolean"
+    }
+  },
+  "$defs": {
+    "Term": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "shortDescription": {
+          "type": "string"
+        },
+        "startDate": {
+          "type": "string"
+        },
+        "endDate": {
+          "type": "string"
+        },
+        "acadCareer": {
+          "type": "string"
+        },
+        "enrolOpenDate": {
+          "type": "string"
+        }
+      }
+    },
+    "TermsList": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Term"
+          }
+        },
+        "total": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "CourseList": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Course"
+          }
+        },
+        "from": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "size": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "total": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "more": {
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}

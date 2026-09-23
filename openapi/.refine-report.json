@@ -1,0 +1,30 @@
+{
+  "provider": "university-of-auckland",
+  "sources": [
+    "_original/university-of-auckland-classes-v2-openapi.json",
+    "_original/university-of-auckland-course-catalog-v3-openapi.json"
+  ],
+  "outputs": [
+    "university-of-auckland-classes-api-openapi.yml",
+    "university-of-auckland-courses-api-api-openapi.yml",
+    "university-of-auckland-reference-data-api-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "2 archived document(s) dropped as subsets of other archived documents",
+    "sourced from openapi/_original/ (2 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "university-of-auckland-classes-v2-openapi.json: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "university-of-auckland-classes-v2-openapi.json: declared missing tag: classes",
+    "university-of-auckland-course-catalog-v3-openapi.json: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "_original/university-of-auckland-course-catalog-v3-openapi.yml: archived document superseded by a larger archived document",
+    "_original/university-of-auckland-classes-v2-openapi.yml: archived document superseded by a larger archived document",
+    "university-of-auckland-classes-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "university-of-auckland-courses-api-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "university-of-auckland-reference-data-api-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
+}

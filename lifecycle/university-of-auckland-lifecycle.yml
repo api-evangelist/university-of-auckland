@@ -1,0 +1,58 @@
+---
+generated: '2026-08-30'
+method: derived
+source:
+  - https://developer.auckland.ac.nz/prd/documentation
+  - openapi/_original/university-of-auckland-classes-v2-openapi.json
+  - openapi/_original/university-of-auckland-course-catalog-v3-openapi.json
+x-operator: institution
+provider: University of Auckland
+providerId: university-of-auckland
+description: >-
+  Versioning and lifecycle posture for the University of Auckland's own API programme, derived
+  from what the developer portal catalogue and the two published specifications actually say.
+  Nothing is inferred from a roadmap or changelog: the University publishes neither.
+versioning:
+  strategy: url-path
+  evidence:
+    - Course Catalog Api V3 is served at /courses/v3; Classes Api V2 at /classes/v2.
+    - Portal documentation slugs carry the major version — api-course-catalog-v3, api-classes-v2.
+  defect: >-
+    info.version reads "3.0" in BOTH documents, including Classes Api V2 whose path segment and
+    title say v2. The document version and the URL version disagree, so a consumer cannot
+    resolve which version a payload came from.
+  prior_versions_visible: false
+  note: >-
+    v1 of the course catalog and v1 of classes are not present in the public catalogue, so the
+    University is on at least its third and second major revision respectively without a public
+    record of what changed.
+deprecation:
+  policy_published: false
+  sunset_header: not observed
+  deprecated_flags_in_spec: none
+  note: >-
+    No deprecation policy, no Sunset/Deprecation headers observed on the gateway, and no
+    `deprecated: true` on any operation or parameter in either document.
+change_communication:
+  changelog: none found
+  release_notes: none found
+  status_page: none found
+  channels:
+    - Portal registration is the only announced channel; a registered application client is
+      required before any change notice could reach a consumer.
+  contact: student-recruitment@list.auckland.ac.nz (info.contact in both documents)
+observed_lifecycle_signals:
+  - signal: cache reload endpoint exposed
+    detail: >-
+      POST /cache/reload/collections ("Reload in-memory caches") is published in the Course
+      Catalog Api V3 contract. It is an operational control surface, not a consumer operation,
+      and its presence in a public catalogue document is a design smell worth flagging.
+  - signal: read-only by design
+    detail: >-
+      Course Catalog Api V3 states "Exposes some course information by querying CS9 views.
+      Read only API." — the lifecycle risk is upstream PeopleSoft (CS9) view drift, which the
+      contract does not surface.
+gaps:
+  - No changelog, release notes, or deprecation policy.
+  - info.version does not track the URL major version.
+  - No public record of retired versions (courses v1/v2, classes v1).

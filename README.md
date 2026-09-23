@@ -64,46 +64,74 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-The University of Auckland is New Zealand's largest and highest-ranked university, placed #92 in the QS World University Rankings 2025. This repository catalogs its public developer and API footprint as an [APIs.json](https://apisjson.org) provider profile. The footprint is modest and decentralized — there is no single unified developer portal — and is anchored by the institution's Figshare research data repository (REST + OAI-PMH), a public University Directory staff API, and a domain-verified GitHub organization.
+Waipapa Taumata Rau | The University of Auckland is New Zealand's largest and highest-ranked university. This repository catalogs its public developer and API footprint as an [APIs.json](https://apisjson.org) provider profile, re-profiled on 2026-08-30 under the API Evangelist **university pipeline**, which settles **who operates each surface** before saving any contract.
+
+Unlike most of this cohort, Auckland genuinely runs an API programme of its own: a **Kong developer portal** at `developer.auckland.ac.nz/prd` and a **Kong gateway** at `apis.auckland.ac.nz`, publishing two OpenAPI 3.1.0 contracts over its PeopleSoft Campus Solutions (CS9) student records. It also self-hosts a DSpace repository with a live OAI-PMH 2.0 service and runs its own Shibboleth/SAML 2.0 identity provider.
 
 - APIs.json: https://raw.githubusercontent.com/api-evangelist/university-of-auckland/refs/heads/main/apis.yml
 - Run with Naftiko: https://github.com/naftiko/fleet?utm_source=api-evangelist&utm_medium=readme&utm_campaign=university-of-auckland-api-evangelist&utm_content=repo
 
 ## Type
 
-- Index / Consumer / 3rd-Party
+- university / Public Research University / Index / Provider / 3rd-Party
 
 ## Tags
 
-Education, Higher Education, University, Research Data, Open Data, New Zealand
+University, Higher Education, Education, New Zealand, Public Research University, Universitas 21, Course Catalog, Student Records, Research Data, Research Repository, Identity Federation, OAI-PMH
 
-## APIs
+## Surfaces, by operator
 
-- **University of Auckland Figshare Research Repository API** — Figshare v2 REST API exposing public articles, datasets, and collections (filter `institution=12`). Docs: https://docs.figshare.com/ · Repository: https://auckland.figshare.com/
-- **University of Auckland Figshare OAI-PMH Service** — OAI-PMH metadata harvesting for the institutional research repository. Docs: https://docs.figshare.com/old_docs/OAI-PMH/
-- **University Directory API** — Public staff search, summary-profile, and full-profile APIs. Docs: https://unidirectory.auckland.ac.nz/apidocs (documented public; host did not resolve from the verification environment)
+Every entry carries an `x-operator`: **institution** (Auckland runs it, on its own domain), **tenant** (Auckland's data and account, the vendor's contract), or **vendor** (not Auckland's at all — never saved here).
 
-## Plans / Rate Limits / FinOps
+### institution
 
-- Plans & Pricing: [plans/university-of-auckland-plans-pricing.yml](plans/university-of-auckland-plans-pricing.yml)
-- Rate Limits: [rate-limits/university-of-auckland-rate-limits.yml](rate-limits/university-of-auckland-rate-limits.yml)
-- FinOps: [finops/university-of-auckland-finops.yml](finops/university-of-auckland-finops.yml)
+- **Course Catalog Api V3** — `https://apis.auckland.ac.nz/courses/v3` · 12 read-only operations over CS9 course views (courses, terms, subjects, consent/component codes, academic orgs, groups, careers). OpenAPI 3.1.0 saved. Live, HTTP 401 without a portal-issued key. Docs: https://developer.auckland.ac.nz/prd/documentation/api-course-catalog-v3
+- **Classes Api V2** — `https://apis.auckland.ac.nz/classes/v2` · class search with 16 query parameters returning class records and meeting patterns. OpenAPI 3.1.0 saved. Live, HTTP 401 without a key. Docs: https://developer.auckland.ac.nz/prd/documentation/api-classes-v2
+- **ResearchSpace OAI-PMH 2.0** — `https://researchspace.auckland.ac.nz/server/oai/request` · self-hosted DSpace, 13 metadata formats, institutional sets. Verified via `verb=Identify`.
+- **ResearchSpace DSpace REST API** — `https://researchspace.auckland.ac.nz/server/api` · HAL+JSON, community tree readable anonymously. Contract is upstream DSpace's, so **no specification is saved here**.
+- **Shibboleth Identity Provider (SAML 2.0 metadata)** — `https://iam.auckland.ac.nz/shibboleth` · entityID `http://iam.auckland.ac.nz/idp`, `shibmd:Scope` `auckland.ac.nz`.
+
+### tenant
+
+- **Figshare research data repository** — https://auckland.figshare.com/ · institution id 12, DOIs under `10.17608/k6.auckland`. The relationship is Auckland's; the `api.figshare.com/v2` contract is Figshare's and is **not** saved here.
+- **Ex Libris Primo library discovery** — `vid=64UAUCK_INST:UOA`. No institution-published catalogue API exists.
+
+## Artifacts
+
+- OpenAPI (searched, saved verbatim): [openapi/](openapi/) with pristine copies in [openapi/_original/](openapi/_original/)
+- JSON Schema (derived): [json-schema/](json-schema/)
+- Example (derived, shape only — the live route returns 401): [examples/](examples/)
+- Authentication · Errors · Lifecycle · Rules · Vocabulary (derived): [authentication/](authentication/) · [errors/](errors/) · [lifecycle/](lifecycle/) · [rules/](rules/) · [vocabulary/](vocabulary/)
+- Conformance (probed): [conformance/university-of-auckland-conformance.yml](conformance/university-of-auckland-conformance.yml) — `oai-pmh`, `saml` and `shibboleth` met with evidence; `scim`, `lti`, `oneroster`, `ed-fi`, `caliper`, `qti`, `orcid`, `datacite`, `crossref` explicitly **not** claimed.
+- Domain Security (probed): [security/university-of-auckland-domain-security.yml](security/university-of-auckland-domain-security.yml)
+- Plans · Rate Limits · FinOps: [plans/](plans/) · [rate-limits/](rate-limits/) · [finops/](finops/)
+- Per-URL HTTP statuses: [review.yml](review.yml)
 
 ## Timestamps
 
 - Created: 2026-06-03
-- Modified: 2026-06-03
+- Modified: 2026-08-30
 
 ## Common Properties
 
 - Website: https://www.auckland.ac.nz/
-- GitHub: https://github.com/university-of-auckland
+- Developer Portal: https://developer.auckland.ac.nz/prd/
+- API Reference: https://developer.auckland.ac.nz/prd/documentation
+- GitHub: https://github.com/university-of-auckland · https://github.com/UoA-eResearch
 - LinkedIn: https://www.linkedin.com/school/university-of-auckland/
 - Review: [review.yml](review.yml)
 
-## Notes
+## Notes — what changed on 2026-08-30, and why
 
-This profile reflects only confirmed or clearly documented public resources — no endpoints were fabricated. The Figshare REST API, OAI-PMH service, documentation, official website, GitHub org, and staff profiles site were probed live and returned successful responses; Figshare's `institution=12` mapping was confirmed via `k6.auckland` DOIs. The University Directory API is documented as publicly accessible, but `unidirectory.auckland.ac.nz` did not resolve from the verification environment, so it is cataloged from documentation references with a caveat. See [review.yml](review.yml) for per-URL HTTP statuses.
+The June 2026 profile credited this institution with **eleven APIs**. All eleven were one document: Figshare's generic `api.figshare.com/v2` REST specification (`info.title: Figshare API`, `contact: Figshare Support`), which the refine step had split by tag into ten per-tag OpenAPIs. Twenty-two vendor-attributed surfaces, and every artifact derived from them — collections, schemas, examples, JSON-LD, vocabulary, rulesets, scopes, authentication, agentic-access and a capability map — have been removed. That work is Figshare's engineering and is scored against Figshare's own profile, where it belongs.
+
+Removed as dead, not merely unverified: `unidirectory.auckland.ac.nz` (the University Directory API) has **no DNS record**.
+
+Confirmed absences, each probed rather than assumed: no open data portal (`data.auckland.ac.nz` redirects to a WordPress login), no `llms.txt`, no `.well-known/security.txt`, no status page, no changelog, no deprecation policy, no published scope list or token endpoint.
+
+Defects in the University's own documents are recorded, not silently repaired: `servers[0].url` in Course Catalog Api V3 reads `httpss://…`; `info.version` reads `3.0` in both documents including the v2 API; `securitySchemes.apikey` omits `name` and `in`; and 4xx/5xx responses reuse the success schema.
+
+**This correction lowers the apparent footprint, and that is the point.** No endpoints were fabricated. See [review.yml](review.yml) for per-URL HTTP statuses and [apis.yml](apis.yml) `x-coverage` for the coverage disclosure.
 
 ## Maintainers
 
