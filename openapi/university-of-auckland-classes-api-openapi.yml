@@ -163,61 +163,6 @@ paths:
                 $ref: '#/components/schemas/ClassesList'
 components:
   schemas:
-    MeetingPattern:
-      type: object
-      properties:
-        startDate:
-          type: string
-        endDate:
-          type: string
-        startTime:
-          type: string
-        endTime:
-          type: string
-        location:
-          type: string
-        daysOfWeek:
-          type: string
-        meetingNumber:
-          type: integer
-          format: int32
-    Link:
-      type: object
-      properties:
-        href:
-          type: string
-        hreflang:
-          type: string
-        title:
-          type: string
-        type:
-          type: string
-        deprecation:
-          type: string
-        profile:
-          type: string
-        name:
-          type: string
-        templated:
-          type: boolean
-    Links:
-      type: object
-      additionalProperties:
-        $ref: '#/components/schemas/Link'
-    ClassesList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClassModel'
-        total:
-          type: integer
-          format: int64
-        empty:
-          type: boolean
-        _links:
-          $ref: '#/components/schemas/Links'
     ClassModel:
       type: object
       properties:
@@ -303,6 +248,61 @@ components:
         year:
           type: integer
           format: int32
+    Links:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/Link'
+    MeetingPattern:
+      type: object
+      properties:
+        startDate:
+          type: string
+        endDate:
+          type: string
+        startTime:
+          type: string
+        endTime:
+          type: string
+        location:
+          type: string
+        daysOfWeek:
+          type: string
+        meetingNumber:
+          type: integer
+          format: int32
+    Link:
+      type: object
+      properties:
+        href:
+          type: string
+        hreflang:
+          type: string
+        title:
+          type: string
+        type:
+          type: string
+        deprecation:
+          type: string
+        profile:
+          type: string
+        name:
+          type: string
+        templated:
+          type: boolean
+    ClassesList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClassModel'
+        total:
+          type: integer
+          format: int64
+        empty:
+          type: boolean
+        _links:
+          $ref: '#/components/schemas/Links'
   securitySchemes:
     apikey:
       type: apiKey

@@ -329,6 +329,16 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    TermsList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Term'
+        total:
+          type: integer
+          format: int64
     Term:
       type: object
       properties:
@@ -346,16 +356,6 @@ components:
           type: string
         enrolOpenDate:
           type: string
-    TermsList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Term'
-        total:
-          type: integer
-          format: int64
   securitySchemes:
     apikey:
       type: apiKey
