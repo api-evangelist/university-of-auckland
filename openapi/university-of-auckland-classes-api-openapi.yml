@@ -163,24 +163,10 @@ paths:
                 $ref: '#/components/schemas/ClassesList'
 components:
   schemas:
-    MeetingPattern:
+    Links:
       type: object
-      properties:
-        startDate:
-          type: string
-        endDate:
-          type: string
-        startTime:
-          type: string
-        endTime:
-          type: string
-        location:
-          type: string
-        daysOfWeek:
-          type: string
-        meetingNumber:
-          type: integer
-          format: int32
+      additionalProperties:
+        $ref: '#/components/schemas/Link'
     ClassesList:
       type: object
       properties:
@@ -214,10 +200,6 @@ components:
           type: string
         templated:
           type: boolean
-    Links:
-      type: object
-      additionalProperties:
-        $ref: '#/components/schemas/Link'
     ClassModel:
       type: object
       properties:
@@ -301,6 +283,24 @@ components:
           items:
             type: string
         year:
+          type: integer
+          format: int32
+    MeetingPattern:
+      type: object
+      properties:
+        startDate:
+          type: string
+        endDate:
+          type: string
+        startTime:
+          type: string
+        endTime:
+          type: string
+        location:
+          type: string
+        daysOfWeek:
+          type: string
+        meetingNumber:
           type: integer
           format: int32
   securitySchemes:
