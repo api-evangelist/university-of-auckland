@@ -227,24 +227,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    CourseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Course'
-        from:
-          type: integer
-          format: int32
-        size:
-          type: integer
-          format: int32
-        total:
-          type: integer
-          format: int32
-        more:
-          type: boolean
     Course:
       type: object
       properties:
@@ -311,6 +293,24 @@ components:
         effStatus:
           type: string
         microcredential:
+          type: boolean
+    CourseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Course'
+        from:
+          type: integer
+          format: int32
+        size:
+          type: integer
+          format: int32
+        total:
+          type: integer
+          format: int32
+        more:
           type: boolean
   securitySchemes:
     apikey:

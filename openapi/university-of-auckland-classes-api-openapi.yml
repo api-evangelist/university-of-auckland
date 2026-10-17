@@ -163,43 +163,24 @@ paths:
                 $ref: '#/components/schemas/ClassesList'
 components:
   schemas:
-    Links:
-      type: object
-      additionalProperties:
-        $ref: '#/components/schemas/Link'
-    ClassesList:
+    MeetingPattern:
       type: object
       properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClassModel'
-        total:
+        startDate:
+          type: string
+        endDate:
+          type: string
+        startTime:
+          type: string
+        endTime:
+          type: string
+        location:
+          type: string
+        daysOfWeek:
+          type: string
+        meetingNumber:
           type: integer
-          format: int64
-        empty:
-          type: boolean
-        _links:
-          $ref: '#/components/schemas/Links'
-    Link:
-      type: object
-      properties:
-        href:
-          type: string
-        hreflang:
-          type: string
-        title:
-          type: string
-        type:
-          type: string
-        deprecation:
-          type: string
-        profile:
-          type: string
-        name:
-          type: string
-        templated:
-          type: boolean
+          format: int32
     ClassModel:
       type: object
       properties:
@@ -285,24 +266,43 @@ components:
         year:
           type: integer
           format: int32
-    MeetingPattern:
+    Link:
       type: object
       properties:
-        startDate:
+        href:
           type: string
-        endDate:
+        hreflang:
           type: string
-        startTime:
+        title:
           type: string
-        endTime:
+        type:
           type: string
-        location:
+        deprecation:
           type: string
-        daysOfWeek:
+        profile:
           type: string
-        meetingNumber:
+        name:
+          type: string
+        templated:
+          type: boolean
+    Links:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/Link'
+    ClassesList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClassModel'
+        total:
           type: integer
-          format: int32
+          format: int64
+        empty:
+          type: boolean
+        _links:
+          $ref: '#/components/schemas/Links'
   securitySchemes:
     apikey:
       type: apiKey
